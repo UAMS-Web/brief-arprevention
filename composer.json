@@ -8,7 +8,12 @@
     },
     "require-dev": {
         "brain/monkey": "^2.7",
-        "pestphp/pest": "^5.3"
+        "laravel/pint": "^1.32",
+        "pestphp/pest": "^5.3",
+        "php-stubs/wordpress-stubs": "^6.8",
+        "phpstan/phpstan": "^2.3",
+        "rector/rector": "^2.8",
+        "szepeviktor/phpstan-wordpress": "^2.0"
     },
     "config": {
         "allow-plugins": {
@@ -21,10 +26,24 @@
     },
     "scripts": {
         "test": "@test:unit",
-        "test:unit": "pest"
+        "test:unit": "pest",
+        "pint": "pint",
+        "refactor": "rector",
+        "refactor:sweep": "rector --clear-cache --config=rector-sweep.php",
+        "stan": "phpstan analyse --no-progress --memory-limit=2G",
+        "test:pint": "pint --test",
+        "test:refactor": "rector --dry-run",
+        "test:refactor:sweep": "rector --dry-run --clear-cache --config=rector-sweep.php"
     },
     "scripts-descriptions": {
         "test": "Run the test suite (the Unit suite; there is no Integration suite).",
-        "test:unit": "Run the Pest suite that needs no WordPress and no database."
+        "test:unit": "Run the Pest suite that needs no WordPress and no database.",
+        "pint": "Format the first-party PHP with Pint.",
+        "refactor": "Apply Rector's gating profile.",
+        "refactor:sweep": "Apply Rector's sweep profile; review the diff.",
+        "stan": "Run PHPStan at the level phpstan.neon.dist names.",
+        "test:pint": "Check the formatting with Pint without changing files.",
+        "test:refactor": "Preview Rector's gating profile.",
+        "test:refactor:sweep": "Preview Rector's sweep profile."
     }
 }
