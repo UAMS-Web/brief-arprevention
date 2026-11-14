@@ -244,7 +244,8 @@ function hide_menu(): void
         // They're an editor, so grant the edit_theme_options capability if they don't have it
         if (! current_user_can('edit_theme_options')) {
             $role_object = get_role('editor');
-            $role_object->add_cap('edit_theme_options');
+            // get_role() returns null for a role that does not exist; there is then nothing to grant.
+            $role_object?->add_cap('edit_theme_options');
         }
 
         // Hide the Themes page

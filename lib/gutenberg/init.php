@@ -79,6 +79,11 @@ function brief_blocks_body_classes($classes)
     }
 
     $post_object = get_post();
+
+    if ($post_object === null) {
+        return $classes;
+    }
+
     // Equivalent: `parse_blocks()` always returns an array, so the cast changes nothing,
     // and `isset()` on the null a missing cast would leave is false just as it is on `[]`.
     // @pest-mutate-ignore: RemoveArrayCast
