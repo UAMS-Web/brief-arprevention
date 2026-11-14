@@ -54,10 +54,11 @@ function brief_woocommerce_css(): void
     $appearance = genesis_get_config('appearance');
 
     $color_text = get_theme_mod('brief_text_color', $appearance['default-colors']['text']);
-    get_theme_mod('brief_link_color', $appearance['default-colors']['link']);
 
     $woo_css = '';
 
+    // Equivalent: `$woo_css` is the empty string here, so `.=` and `=` give the same value.
+    // @pest-mutate-ignore: ConcatEqualToEqual
     $woo_css .= ($appearance['default-colors']['text'] !== $color_text) ? sprintf(
         '
 
@@ -108,50 +109,6 @@ function brief_woocommerce_css(): void
 
 	',
         $color_text
-    ) : '';
-
-    $woo_css .= ($appearance['default-colors']['accent'] !== $color_accent) ? sprintf(
-        '
-		.woocommerce a.button:hover,
-		.woocommerce a.button:focus,
-		.woocommerce a.button.alt:hover,
-		.woocommerce a.button.alt:focus,
-		.woocommerce button.button:hover,
-		.woocommerce button.button:focus,
-		.woocommerce button.button.alt:hover,
-		.woocommerce button.button.alt:focus,
-		.woocommerce input.button:hover,
-		.woocommerce input.button:focus,
-		.woocommerce input.button.alt:hover,
-		.woocommerce input.button.alt:focus,
-		.woocommerce input[type="submit"]:hover,
-		.woocommerce input[type="submit"]:focus,
-		.woocommerce span.onsale,
-		.woocommerce #respond input#submit:hover,
-		.woocommerce #respond input#submit:focus,
-		.woocommerce #respond input#submit.alt:hover,
-		.woocommerce #respond input#submit.alt:focus,
-		.woocommerce.widget_price_filter .ui-slider .ui-slider-handle,
-		.woocommerce.widget_price_filter .ui-slider .ui-slider-range {
-			background-color: %1$s;
-			color: %2$s;
-		}
-
-		.woocommerce-error,
-		.woocommerce-info,
-		.woocommerce-message {
-			border-top-color: %1$s;
-		}
-
-		.woocommerce-error::before,
-		.woocommerce-info::before,
-		.woocommerce-message::before {
-			color: %1$s;
-		}
-
-	',
-        $color_accent,
-        brief_color_contrast($color_accent)
     ) : '';
 
     if ($woo_css) {

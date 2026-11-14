@@ -5,6 +5,7 @@
  */
 
 declare(strict_types=1);
+
 use Brain\Monkey\Container;
 use Brain\Monkey\Hook\HookStorage;
 
@@ -12,6 +13,7 @@ use function Brain\Monkey\Functions\stubTranslationFunctions;
 use function Brain\Monkey\Functions\when;
 use function Brain\Monkey\setUp;
 use function Brain\Monkey\tearDown;
+use function Patchwork\relay;
 
 /*
  * Brain Monkey around every test.
@@ -49,9 +51,9 @@ uses()
  */
 function brief_registered_hooks(string $type, string $hook, string $callback): ?int
 {
-    $priorities = $GLOBALS['brief_registered_hooks'][$type][$hook][$callback] ?? [];
+    $registrations = $GLOBALS['brief_registered_hooks'][$type][$hook][$callback] ?? [];
 
-    return count($priorities) === 1 ? $priorities[0] : null;
+    return count($registrations) === 1 ? $registrations[0][0] : null;
 }
 
 /**
@@ -124,6 +126,9 @@ function brief_load_theme(): void
         });
     }
 
+    // WooCommerce is active while the theme loads, so file scope takes its WooCommerce branch.
+    brief_woocommerce_active(true);
+
     // What file scope reads: the real config files, with every theme mod at its default.
     when('get_theme_mod')->alias(fn (string $name, $default = false) => $default);
     when('genesis_get_config')->alias(fn (string $name) => require $root.'/config/'.$name.'.php');
@@ -140,7 +145,7 @@ function brief_load_theme(): void
     foreach ($added as $type => $hooks) {
         foreach ($hooks as $hook => $entries) {
             foreach ($entries as $entry) {
-                $GLOBALS['brief_registered_hooks'][$type][$hook][(string) $entry[0]][] = $entry[1];
+                $GLOBALS['brief_registered_hooks'][$type][$hook][(string) $entry[0]][] = [$entry[1], $entry[2]];
             }
         }
     }
@@ -169,9 +174,9 @@ function brief_assert_theme_load(): void
 
     foreach ($GLOBALS['brief_registered_hooks'] as $type => $by_hook) {
         foreach ($by_hook as $hook => $callbacks) {
-            foreach ($callbacks as $callback => $priorities) {
-                foreach ($priorities as $priority) {
-                    $hooks[] = "{$type} {$hook} {$callback} {$priority}";
+            foreach ($callbacks as $callback => $registrations) {
+                foreach ($registrations as [$priority, $accepted_args]) {
+                    $hooks[] = "{$type} {$hook} {$callback} {$priority} {$accepted_args}";
                 }
             }
         }
@@ -181,4 +186,34 @@ function brief_assert_theme_load(): void
 
     expect($hooks)->toEqualCanonicalizing($expected['hooks'])
         ->and($GLOBALS['brief_recorded_calls'])->toBe($expected['calls']);
+}
+
+/**
+ * Makes `class_exists()` answer as given for the named classes; every other class is
+ * answered by the real function (Mockery and Brain Monkey call it while a test runs).
+ *
+ * @param  array<string, bool>  $answers
+ */
+function brief_class_exists(array $answers): void
+{
+    when('class_exists')->alias(fn (string $class) => $answers[$class] ?? relay(func_get_args()));
+}
+
+/**
+ * Makes `class_exists('WooCommerce')` answer as given.
+ */
+function brief_woocommerce_active(bool $active): void
+{
+    brief_class_exists(['WooCommerce' => $active]);
+}
+
+/**
+ * Makes `function_exists()` answer as given for the named functions; the real
+ * function answers for every other.
+ *
+ * @param  array<string, bool>  $answers
+ */
+function brief_function_exists(array $answers): void
+{
+    when('function_exists')->alias(fn (string $function) => $answers[$function] ?? relay(func_get_args()));
 }

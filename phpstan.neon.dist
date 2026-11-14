@@ -136,6 +136,11 @@ parameters:
     # checkout gets its own cache and a deleted one takes only its own with it.
     # There is no `--tmp-dir` CLI flag, so this key is the only lever.
     # Add `/.phpstan/` to .gitignore.
+    # Patchwork is loaded by tests/bootstrap.php, not autoloaded, so name it for the
+    # tests that call Patchwork\relay().
+    scanFiles:
+        - vendor/antecedent/patchwork/Patchwork.php
+
     tmpDir: .phpstan
 
     # WordPress ships a very large global function surface; the stubs cover it,
