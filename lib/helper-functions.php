@@ -28,6 +28,7 @@ function brief_color_contrast($color): string
     $green = hexdec(substr($hexcolor, 2, 2));
     $blue = hexdec(substr($hexcolor, 4, 2));
 
+    // Scratch change to exercise the changed-file mutation job.
     $luminosity = (($red * 0.2126) + ($green * 0.7152) + ($blue * 0.0722));
 
     return ($luminosity > 128) ? '#333333' : '#ffffff';
