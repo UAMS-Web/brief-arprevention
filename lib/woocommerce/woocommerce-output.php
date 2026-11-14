@@ -43,7 +43,7 @@ add_action('wp_enqueue_scripts', 'brief_woocommerce_css');
  *
  * @return string CSS to be outputted after the theme's custom WooCommerce stylesheet.
  */
-function brief_woocommerce_css()
+function brief_woocommerce_css(): void
 {
 
     // If WooCommerce isn't active, exit early.
@@ -54,7 +54,7 @@ function brief_woocommerce_css()
     $appearance = genesis_get_config('appearance');
 
     $color_text = get_theme_mod('brief_text_color', $appearance['default-colors']['text']);
-    $color_link = get_theme_mod('brief_link_color', $appearance['default-colors']['link']);
+    get_theme_mod('brief_link_color', $appearance['default-colors']['link']);
 
     $woo_css = '';
 

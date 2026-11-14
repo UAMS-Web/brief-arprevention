@@ -29,7 +29,7 @@ add_filter('woocommerce_style_smallscreen_breakpoint', 'brief_woocommerce_breakp
  *
  * @return string Pixel width of the theme's breakpoint.
  */
-function brief_woocommerce_breakpoint()
+function brief_woocommerce_breakpoint(): string
 {
 
     $current = genesis_site_layout(false);
@@ -56,7 +56,7 @@ add_filter('genesiswooc_products_per_page', 'brief_default_products_per_page');
  *
  * @return int Number of products to show per page.
  */
-function brief_default_products_per_page()
+function brief_default_products_per_page(): int
 {
 
     return 8;
@@ -89,7 +89,7 @@ add_action('after_switch_theme', 'brief_woocommerce_image_dimensions_after_theme
  *
  * @since 2.3.0
  */
-function brief_woocommerce_image_dimensions_after_theme_setup()
+function brief_woocommerce_image_dimensions_after_theme_setup(): void
 {
 
     global $pagenow;
@@ -111,7 +111,7 @@ add_action('activated_plugin', 'brief_woocommerce_image_dimensions_after_woo_act
  *
  * @param  string  $plugin  The path of the plugin being activated.
  */
-function brief_woocommerce_image_dimensions_after_woo_activation($plugin)
+function brief_woocommerce_image_dimensions_after_woo_activation($plugin): void
 {
 
     // Checks to see if WooCommerce is being activated.
@@ -128,7 +128,7 @@ function brief_woocommerce_image_dimensions_after_woo_activation($plugin)
  *
  * @since 2.3.0
  */
-function brief_update_woocommerce_image_dimensions()
+function brief_update_woocommerce_image_dimensions(): void
 {
 
     // Updates image size options.
@@ -149,16 +149,14 @@ add_filter('woocommerce_get_image_size_gallery_thumbnail', 'brief_gallery_image_
  * @param  array  $size  The gallery image size and crop arguments.
  * @return array The modified gallery image size and crop arguments.
  */
-function brief_gallery_image_thumbnail($size)
+function brief_gallery_image_thumbnail($size): array
 {
 
-    $size = [
+    return [
         'width' => 180,
         'height' => 180,
         'crop' => 1,
     ];
-
-    return $size;
 
 }
 

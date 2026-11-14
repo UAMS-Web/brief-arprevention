@@ -17,7 +17,7 @@ add_action('admin_print_styles', 'brief_remove_woocommerce_notice');
  *
  * @since 2.3.0
  */
-function brief_remove_woocommerce_notice()
+function brief_remove_woocommerce_notice(): void
 {
 
     // If below version WooCommerce 2.3.0, exit early.
@@ -36,7 +36,7 @@ add_action('admin_notices', 'brief_woocommerce_theme_notice');
  *
  * @since 2.3.0
  */
-function brief_woocommerce_theme_notice()
+function brief_woocommerce_theme_notice(): void
 {
 
     // If WooCommerce isn't installed or Genesis Connect is installed, exit early.
@@ -89,7 +89,7 @@ add_action('wp_ajax_brief_dismiss_woocommerce_notice', 'brief_dismiss_woocommerc
  *
  * @since 2.3.0
  */
-function brief_dismiss_woocommerce_notice()
+function brief_dismiss_woocommerce_notice(): void
 {
 
     update_user_option(get_current_user_id(), 'brief_woocommerce_message_dismissed', 1);
@@ -102,7 +102,7 @@ add_action('admin_enqueue_scripts', 'brief_notice_script');
  *
  * @since 2.3.0
  */
-function brief_notice_script()
+function brief_notice_script(): void
 {
 
     wp_enqueue_script('brief_notice_script', get_stylesheet_directory_uri().'/lib/woocommerce/js/notice-update.js', ['jquery'], '1.0', true);
@@ -115,7 +115,7 @@ add_action('switch_theme', 'brief_reset_woocommerce_notice', 10, 2);
  *
  * @since 2.3.0
  */
-function brief_reset_woocommerce_notice()
+function brief_reset_woocommerce_notice(): void
 {
 
     global $wpdb;
@@ -141,7 +141,7 @@ add_action('deactivated_plugin', 'brief_reset_woocommerce_notice_on_deactivation
  * @param  string  $plugin  The plugin slug.
  * @param  bool  $network_deactivating  Whether the plugin is deactivated for all sites in the network. or just the current site.
  */
-function brief_reset_woocommerce_notice_on_deactivation($plugin, $network_deactivating)
+function brief_reset_woocommerce_notice_on_deactivation($plugin, $network_deactivating): void
 {
 
     // Conditional check to see if we're deactivating WooCommerce or Genesis Connect for WooCommerce.

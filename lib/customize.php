@@ -19,7 +19,7 @@ add_action('customize_register', 'brief_customizer_register');
  *
  * @param  WP_Customize_Manager  $wp_customize  Customizer object.
  */
-function brief_customizer_register($wp_customize)
+function brief_customizer_register($wp_customize): void
 {
 
     $appearance = genesis_get_config('appearance');

@@ -103,18 +103,6 @@ parameters:
 			path: lib/woocommerce/woocommerce-notice.php
 
 		-
-			rawMessage: Action callback returns string but should not return anything.
-			identifier: return.void
-			count: 1
-			path: lib/woocommerce/woocommerce-output.php
-
-		-
-			rawMessage: 'Function brief_woocommerce_css() should return string but return statement is missing.'
-			identifier: return.missing
-			count: 2
-			path: lib/woocommerce/woocommerce-output.php
-
-		-
 			rawMessage: Function genesis_get_config not found.
 			identifier: function.notFound
 			count: 1

@@ -15,7 +15,7 @@ add_action('wp_enqueue_scripts', 'brief_enqueue_gutenberg_frontend_styles');
  *
  * @since 2.7.0
  */
-function brief_enqueue_gutenberg_frontend_styles()
+function brief_enqueue_gutenberg_frontend_styles(): void
 {
 
     wp_enqueue_style(
@@ -33,7 +33,7 @@ add_action('enqueue_block_editor_assets', 'brief_block_editor_styles');
  *
  * @since 2.7.0
  */
-function brief_block_editor_styles()
+function brief_block_editor_styles(): void
 {
 
     $appearance = genesis_get_config('appearance');
@@ -120,7 +120,7 @@ add_action('after_setup_theme', 'brief_content_width', 0);
 /**
  * Set content width to match the “wide” Gutenberg block width.
  */
-function brief_content_width()
+function brief_content_width(): void
 {
 
     $appearance = genesis_get_config('appearance');
