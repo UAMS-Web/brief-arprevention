@@ -67,11 +67,11 @@ add_filter('woocommerce_pagination_args', 'brief_woocommerce_pagination');
 /**
  * Updates the next and previous arrows to the default Genesis style.
  *
- * @param  array  $args  The previous and next text arguments.
+ * @param  array<string, mixed>  $args  The previous and next text arguments.
  *
  * @since 2.3.0
  *
- * @return array New next and previous text arguments.
+ * @return array<string, mixed> New next and previous text arguments.
  */
 function brief_woocommerce_pagination($args)
 {
@@ -146,7 +146,7 @@ add_filter('woocommerce_get_image_size_gallery_thumbnail', 'brief_gallery_image_
  *
  * @since 2.6.0
  *
- * @return array The gallery image size and crop arguments.
+ * @return array{width: int, height: int, crop: int} The gallery image size and crop arguments.
  */
 function brief_gallery_image_thumbnail(): array
 {

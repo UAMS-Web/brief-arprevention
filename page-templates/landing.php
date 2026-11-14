@@ -19,8 +19,8 @@ add_filter('body_class', 'brief_landing_body_class');
  *
  * @since 1.0.0
  *
- * @param  array  $classes  Original body classes.
- * @return array Modified body classes.
+ * @param  array<int, string>  $classes  Original body classes.
+ * @return array<int, string> Modified body classes.
  */
 function brief_landing_body_class($classes)
 {
