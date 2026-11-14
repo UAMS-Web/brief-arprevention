@@ -43,9 +43,9 @@ when('get_template_directory')->justReturn($genesis_stub);
 when('get_stylesheet_directory')->justReturn(dirname(__DIR__));
 
 // What functions.php calls at file scope that Brain Monkey does not define.
-when('add_image_size')->justReturn(null);
-when('unregister_sidebar')->justReturn(null);
-when('genesis_unregister_layout')->justReturn(null);
+when('add_image_size')->justReturn();
+when('unregister_sidebar')->justReturn();
+when('genesis_unregister_layout')->justReturn();
 
 require_once __DIR__.'/../functions.php';
 

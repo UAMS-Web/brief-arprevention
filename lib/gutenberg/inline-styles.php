@@ -15,7 +15,7 @@ add_action('wp_enqueue_scripts', 'brief_custom_gutenberg_css');
  *
  * @since 2.9.0
  */
-function brief_custom_gutenberg_css()
+function brief_custom_gutenberg_css(): void
 {
 
     $appearance = genesis_get_config('appearance');
@@ -56,7 +56,7 @@ add_action('enqueue_block_editor_assets', 'brief_custom_gutenberg_admin_css');
  *
  * @since 2.9.0
  */
-function brief_custom_gutenberg_admin_css()
+function brief_custom_gutenberg_admin_css(): void
 {
 
     $appearance = genesis_get_config('appearance');
@@ -98,7 +98,7 @@ CSS;
  *
  * @return string The CSS for editor font sizes if theme support was declared.
  */
-function brief_inline_font_sizes()
+function brief_inline_font_sizes(): string
 {
 
     $css = '';
@@ -127,7 +127,7 @@ CSS;
  *
  * @return string The editor colors CSS if `editor-color-palette` theme support was declared.
  */
-function brief_inline_color_palette()
+function brief_inline_color_palette(): string
 {
 
     $css = '';

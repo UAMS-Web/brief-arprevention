@@ -20,7 +20,7 @@ declare(strict_types=1);
  * @param  string  $color  A color in hex format.
  * @return string The hex code for the most contrasting color: dark grey or white.
  */
-function brief_color_contrast($color)
+function brief_color_contrast($color): string
 {
 
     $hexcolor = str_replace('#', '', $color);
@@ -44,7 +44,7 @@ function brief_color_contrast($color)
  * @param  int  $change  The amount to reduce or increase brightness by.
  * @return string Hex code for the adjusted color brightness.
  */
-function brief_color_brightness($color, $change)
+function brief_color_brightness($color, $change): string
 {
 
     $hexcolor = str_replace('#', '', $color);

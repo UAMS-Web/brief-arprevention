@@ -18,7 +18,7 @@ add_action('wp_enqueue_scripts', 'brief_css');
  *
  * @since 2.2.3
  */
-function brief_css()
+function brief_css(): void
 {
 
     $appearance = genesis_get_config('appearance');

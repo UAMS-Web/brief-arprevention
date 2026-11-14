@@ -40,7 +40,7 @@ add_action('wp_enqueue_scripts', 'brief_dequeue_skip_links');
  *
  * @since 1.0.0
  */
-function brief_dequeue_skip_links()
+function brief_dequeue_skip_links(): void
 {
 
     wp_dequeue_script('skip-links');
