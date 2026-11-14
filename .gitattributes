@@ -1,0 +1,17 @@
+* text=auto eol=lf
+
+# The GitHub download holds only what the theme runs: a keep-list (see the
+# keep-the-download-to-what-runs rule). The first two lines leave out every top-level entry,
+# dot-entries included; each line after them puts one runtime path back.
+/* export-ignore
+/.* export-ignore
+/config -export-ignore
+/functions.php -export-ignore
+/images -export-ignore
+/languages -export-ignore
+/lib -export-ignore
+/page-templates -export-ignore
+/README.txt -export-ignore
+/screenshot.png -export-ignore
+/style.css -export-ignore
+/xml -export-ignore

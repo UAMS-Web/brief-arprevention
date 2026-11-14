@@ -15,6 +15,9 @@ name: CI
 # - Mutation is off (`mutate: false`) until its own ticket. That also skips `mutate-ignore`.
 # - Every job runs on `ubuntu-latest` (`linux-only`): the theme has no platform-specific code.
 # - `floor-lint` parses every shipped PHP file under PHP 8.2, the supported floor.
+# - `download-archive` checks that the GitHub download holds only what the theme runs, with the
+#   synced skill's script (the chain's default path, `scripts/check-download-archive.mjs`, is not
+#   delivered here).
 # - The jobs check out this repository, so it carries `.github/actions/setup/action.yml`, the
 #   synced `.claude/skills` scripts, the `test:pint`, `test:refactor`, `stan` and `test`
 #   Composer scripts, and `tests/skip-baseline.json`.
@@ -44,6 +47,8 @@ jobs:
     with:
       linux-only: true
       mutate: false
+      download-archive: true
+      download-archive-command: node .claude/skills/download-archive-check/check-download-archive.mjs
       floor-lint: true
       floor-lint-php: '8.2'
       floor-lint-command: find . -name '*.php' -not -path './vendor/*' -not -path './tests/*' -not -path './node_modules/*' -not -path './.claude/*' -not -path './.agents/*' -print0 | xargs -0 -n1 php -l
