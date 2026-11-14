@@ -1,3 +1,33 @@
 {
-    "redefinable-internals": ["class_exists", "function_exists"]
+    "redefinable-internals": [
+        "class_exists",
+        "function_exists"
+    ],
+    "blacklist": [
+        "vendor/bin",
+        "vendor/brianium",
+        "vendor/doctrine",
+        "vendor/fidry",
+        "vendor/filp",
+        "vendor/hamcrest",
+        "vendor/jean85",
+        "vendor/laravel",
+        "vendor/myclabs",
+        "vendor/nikic",
+        "vendor/nunomaduro",
+        "vendor/pestphp",
+        "vendor/phar-io",
+        "vendor/php-stubs",
+        "vendor/phpdocumentor",
+        "vendor/phpstan",
+        "vendor/phpunit",
+        "vendor/psr",
+        "vendor/rector",
+        "vendor/sebastian",
+        "vendor/staabm",
+        "vendor/symfony",
+        "vendor/szepeviktor",
+        "vendor/ta-tikoma",
+        "vendor/webmozart"
+    ]
 }

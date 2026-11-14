@@ -51,9 +51,9 @@ uses()
  */
 function brief_registered_hooks(string $type, string $hook, string $callback): ?int
 {
-    $priorities = $GLOBALS['brief_registered_hooks'][$type][$hook][$callback] ?? [];
+    $registrations = $GLOBALS['brief_registered_hooks'][$type][$hook][$callback] ?? [];
 
-    return count($priorities) === 1 ? $priorities[0] : null;
+    return count($registrations) === 1 ? $registrations[0][0] : null;
 }
 
 /**
@@ -145,7 +145,7 @@ function brief_load_theme(): void
     foreach ($added as $type => $hooks) {
         foreach ($hooks as $hook => $entries) {
             foreach ($entries as $entry) {
-                $GLOBALS['brief_registered_hooks'][$type][$hook][(string) $entry[0]][] = $entry[1];
+                $GLOBALS['brief_registered_hooks'][$type][$hook][(string) $entry[0]][] = [$entry[1], $entry[2]];
             }
         }
     }
@@ -174,9 +174,9 @@ function brief_assert_theme_load(): void
 
     foreach ($GLOBALS['brief_registered_hooks'] as $type => $by_hook) {
         foreach ($by_hook as $hook => $callbacks) {
-            foreach ($callbacks as $callback => $priorities) {
-                foreach ($priorities as $priority) {
-                    $hooks[] = "{$type} {$hook} {$callback} {$priority}";
+            foreach ($callbacks as $callback => $registrations) {
+                foreach ($registrations as [$priority, $accepted_args]) {
+                    $hooks[] = "{$type} {$hook} {$callback} {$priority} {$accepted_args}";
                 }
             }
         }
