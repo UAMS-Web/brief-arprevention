@@ -146,10 +146,9 @@ add_filter('woocommerce_get_image_size_gallery_thumbnail', 'brief_gallery_image_
  *
  * @since 2.6.0
  *
- * @param  array  $size  The gallery image size and crop arguments.
- * @return array The modified gallery image size and crop arguments.
+ * @return array The gallery image size and crop arguments.
  */
-function brief_gallery_image_thumbnail($size): array
+function brief_gallery_image_thumbnail(): array
 {
 
     return [

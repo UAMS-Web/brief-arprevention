@@ -161,7 +161,7 @@ it('forgets the dismissal when WooCommerce or Genesis Connect is deactivated', f
     $GLOBALS['wpdb'] = (object) ['prefix' => 'wp_'];
     Functions\expect('get_users')->times($reset ? 1 : 0)->andReturn([]);
 
-    brief_reset_woocommerce_notice_on_deactivation($plugin, false);
+    brief_reset_woocommerce_notice_on_deactivation($plugin);
 })->with([
     'WooCommerce' => ['woocommerce/woocommerce.php', true],
     'Genesis Connect' => ['genesis-connect-woocommerce/genesis-connect-woocommerce.php', true],

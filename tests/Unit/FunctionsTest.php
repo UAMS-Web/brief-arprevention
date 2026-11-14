@@ -121,7 +121,7 @@ it('links the read more text to the permalink', function (): void {
 });
 
 it('sets the gravatar sizes', function (): void {
-    expect(brief_author_box_gravatar(50))->toBe(90)
+    expect(brief_author_box_gravatar())->toBe(90)
         ->and(brief_comments_gravatar(['avatar_size' => 48, 'style' => 'ol']))
         ->toBe(['avatar_size' => 60, 'style' => 'ol']);
 });

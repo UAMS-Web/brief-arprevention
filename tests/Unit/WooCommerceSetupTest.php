@@ -64,7 +64,7 @@ it('uses the Genesis pagination arrows and keeps the other arguments', function 
 });
 
 it('sizes the gallery thumbnail 180 by 180 and cropped', function (): void {
-    expect(brief_gallery_image_thumbnail(['width' => 100]))->toBe(['width' => 180, 'height' => 180, 'crop' => 1]);
+    expect(brief_gallery_image_thumbnail())->toBe(['width' => 180, 'height' => 180, 'crop' => 1]);
 });
 
 it('sets the WooCommerce image sizes and cropping', function (): void {

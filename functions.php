@@ -201,10 +201,9 @@ add_filter('genesis_author_box_gravatar_size', 'brief_author_box_gravatar');
  *
  * @since 2.2.3
  *
- * @param  int  $size  Original icon size.
  * @return int Modified icon size.
  */
-function brief_author_box_gravatar($size): int
+function brief_author_box_gravatar(): int
 {
 
     return 90;

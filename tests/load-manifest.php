@@ -40,7 +40,7 @@ return [
         'actions wp_ajax_brief_dismiss_woocommerce_notice brief_dismiss_woocommerce_notice 10 1',
         'actions admin_enqueue_scripts brief_notice_script 10 1',
         'actions switch_theme brief_reset_woocommerce_notice 10 2',
-        'actions deactivated_plugin brief_reset_woocommerce_notice_on_deactivation 10 2',
+        'actions deactivated_plugin brief_reset_woocommerce_notice_on_deactivation 10 1',
         'actions admin_menu hide_menu 10 1',
         'actions enqueue_block_editor_assets brief_block_editor_styles 10 1',
         'actions enqueue_block_editor_assets brief_custom_gutenberg_admin_css 10 1',
