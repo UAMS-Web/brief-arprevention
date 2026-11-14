@@ -6,10 +6,25 @@
     "require": {
         "php": ">=8.2"
     },
+    "require-dev": {
+        "brain/monkey": "^2.7",
+        "pestphp/pest": "^5.3"
+    },
     "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        },
         "platform": {
             "php": "8.4.27"
         },
         "sort-packages": true
+    },
+    "scripts": {
+        "test": "@test:unit",
+        "test:unit": "pest"
+    },
+    "scripts-descriptions": {
+        "test": "Run the test suite (the Unit suite; there is no Integration suite).",
+        "test:unit": "Run the Pest suite that needs no WordPress and no database."
     }
 }
