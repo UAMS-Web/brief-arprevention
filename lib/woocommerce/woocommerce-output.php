@@ -1,38 +1,41 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Brief.
  *
  * This file adds the WooCommerce styles and the Customizer additions for WooCommerce to the Brief Theme.
  *
- * @package Brief
  * @author  Minimal Genesis
  * @license GPL-2.0-or-later
+ *
  * @link    https://minimalgenesis.com/
  */
-
-add_filter( 'woocommerce_enqueue_styles', 'brief_woocommerce_styles' );
+add_filter('woocommerce_enqueue_styles', 'brief_woocommerce_styles');
 /**
  * Enqueues the theme's custom WooCommerce styles to the WooCommerce plugin.
  *
- * @param array $enqueue_styles The WooCommerce styles to enqueue.
+ * @param  array  $enqueue_styles  The WooCommerce styles to enqueue.
+ *
  * @since 2.3.0
  *
  * @return array Modified WooCommerce styles to enqueue.
  */
-function brief_woocommerce_styles( $enqueue_styles ) {
+function brief_woocommerce_styles($enqueue_styles)
+{
 
-	$enqueue_styles[ genesis_get_theme_handle() . '-woocommerce-styles' ] = [
-		'src'     => get_stylesheet_directory_uri() . '/lib/woocommerce/woocommerce-styles.css',
-		'deps'    => '',
-		'version' => genesis_get_theme_version(),
-		'media'   => 'screen',
-	];
+    $enqueue_styles[genesis_get_theme_handle().'-woocommerce-styles'] = [
+        'src' => get_stylesheet_directory_uri().'/lib/woocommerce/woocommerce-styles.css',
+        'deps' => '',
+        'version' => genesis_get_theme_version(),
+        'media' => 'screen',
+    ];
 
-	return $enqueue_styles;
+    return $enqueue_styles;
 
 }
 
-add_action( 'wp_enqueue_scripts', 'brief_woocommerce_css' );
+add_action('wp_enqueue_scripts', 'brief_woocommerce_css');
 /**
  * Adds the themes's custom CSS to the WooCommerce stylesheet.
  *
@@ -40,22 +43,23 @@ add_action( 'wp_enqueue_scripts', 'brief_woocommerce_css' );
  *
  * @return string CSS to be outputted after the theme's custom WooCommerce stylesheet.
  */
-function brief_woocommerce_css() {
+function brief_woocommerce_css()
+{
 
-	// If WooCommerce isn't active, exit early.
-	if ( ! class_exists( 'WooCommerce' ) ) {
-		return;
-	}
+    // If WooCommerce isn't active, exit early.
+    if (! class_exists('WooCommerce')) {
+        return;
+    }
 
-	$appearance = genesis_get_config( 'appearance' );
+    $appearance = genesis_get_config('appearance');
 
-	$color_text   = get_theme_mod( 'brief_text_color', $appearance['default-colors']['text'] );
-	$color_link   = get_theme_mod( 'brief_link_color', $appearance['default-colors']['link'] );
+    $color_text = get_theme_mod('brief_text_color', $appearance['default-colors']['text']);
+    $color_link = get_theme_mod('brief_link_color', $appearance['default-colors']['link']);
 
-	$woo_css = '';
+    $woo_css = '';
 
-	$woo_css .= ( $appearance['default-colors']['text'] !== $color_text ) ? sprintf(
-		'
+    $woo_css .= ($appearance['default-colors']['text'] !== $color_text) ? sprintf(
+        '
 
 		.woocommerce-error::before,
 		.woocommerce-info::before,
@@ -103,11 +107,11 @@ function brief_woocommerce_css() {
 		}
 
 	',
-		$color_text
-	) : '';
+        $color_text
+    ) : '';
 
-	$woo_css .= ( $appearance['default-colors']['accent'] !== $color_accent ) ? sprintf(
-		'
+    $woo_css .= ($appearance['default-colors']['accent'] !== $color_accent) ? sprintf(
+        '
 		.woocommerce a.button:hover,
 		.woocommerce a.button:focus,
 		.woocommerce a.button.alt:hover,
@@ -146,12 +150,12 @@ function brief_woocommerce_css() {
 		}
 
 	',
-		$color_accent,
-		brief_color_contrast( $color_accent )
-	) : '';
+        $color_accent,
+        brief_color_contrast($color_accent)
+    ) : '';
 
-	if ( $woo_css ) {
-		wp_add_inline_style( genesis_get_theme_handle() . '-woocommerce-styles', $woo_css );
-	}
+    if ($woo_css) {
+        wp_add_inline_style(genesis_get_theme_handle().'-woocommerce-styles', $woo_css);
+    }
 
 }

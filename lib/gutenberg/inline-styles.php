@@ -1,24 +1,26 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Adds front-end inline styles for the custom Gutenberg color palette.
  *
- * @package Brief
  * @author  Minimal Genesis
  * @license GPL-2.0-or-later
+ *
  * @link    https://minimalgenesis.com/
  */
-
-add_action( 'wp_enqueue_scripts', 'brief_custom_gutenberg_css' );
+add_action('wp_enqueue_scripts', 'brief_custom_gutenberg_css');
 /**
  * Outputs front-end inline styles based on colors declared in config/appearance.php.
  *
  * @since 2.9.0
  */
-function brief_custom_gutenberg_css() {
+function brief_custom_gutenberg_css()
+{
 
-	$appearance = genesis_get_config( 'appearance' );
+    $appearance = genesis_get_config('appearance');
 
-	$css = <<<CSS
+    $css = <<<CSS
 
 .site-container .wp-block-button .wp-block-button__link {
 	background-color: {$appearance['text-color']};
@@ -38,14 +40,14 @@ function brief_custom_gutenberg_css() {
 }
 CSS;
 
-	$css .= brief_inline_font_sizes();
-	$css .= brief_inline_color_palette();
+    $css .= brief_inline_font_sizes();
+    $css .= brief_inline_color_palette();
 
-	wp_add_inline_style( genesis_get_theme_handle() . '-gutenberg', $css );
+    wp_add_inline_style(genesis_get_theme_handle().'-gutenberg', $css);
 
 }
 
-add_action( 'enqueue_block_editor_assets', 'brief_custom_gutenberg_admin_css' );
+add_action('enqueue_block_editor_assets', 'brief_custom_gutenberg_admin_css');
 /**
  * Outputs back-end inline styles based on colors declared in config/appearance.php.
  *
@@ -54,11 +56,12 @@ add_action( 'enqueue_block_editor_assets', 'brief_custom_gutenberg_admin_css' );
  *
  * @since 2.9.0
  */
-function brief_custom_gutenberg_admin_css() {
+function brief_custom_gutenberg_admin_css()
+{
 
-	$appearance = genesis_get_config( 'appearance' );
+    $appearance = genesis_get_config('appearance');
 
-	$css = <<<CSS
+    $css = <<<CSS
 .editor-styles-wrapper {
     color: {$appearance['text-color']} !important;
 }
@@ -84,7 +87,7 @@ function brief_custom_gutenberg_admin_css() {
 }
 CSS;
 
-	wp_add_inline_style( genesis_get_theme_handle() . '-gutenberg-fonts', $css );
+    wp_add_inline_style(genesis_get_theme_handle().'-gutenberg-fonts', $css);
 
 }
 
@@ -95,24 +98,25 @@ CSS;
  *
  * @return string The CSS for editor font sizes if theme support was declared.
  */
-function brief_inline_font_sizes() {
+function brief_inline_font_sizes()
+{
 
-	$css               = '';
-	$editor_font_sizes = get_theme_support( 'editor-font-sizes' );
+    $css = '';
+    $editor_font_sizes = get_theme_support('editor-font-sizes');
 
-	if ( ! $editor_font_sizes ) {
-		return '';
-	}
+    if (! $editor_font_sizes) {
+        return '';
+    }
 
-	foreach ( $editor_font_sizes[0] as $font_size ) {
-		$css .= <<<CSS
+    foreach ($editor_font_sizes[0] as $font_size) {
+        $css .= <<<CSS
 		.site-container .has-{$font_size['slug']}-font-size {
 			font-size: {$font_size['size']}px;
 		}
 CSS;
-	}
+    }
 
-	return $css;
+    return $css;
 
 }
 
@@ -123,14 +127,15 @@ CSS;
  *
  * @return string The editor colors CSS if `editor-color-palette` theme support was declared.
  */
-function brief_inline_color_palette() {
+function brief_inline_color_palette()
+{
 
-	$css                  = '';
-	$appearance           = genesis_get_config( 'appearance' );
-	$editor_color_palette = $appearance['editor-color-palette'];
+    $css = '';
+    $appearance = genesis_get_config('appearance');
+    $editor_color_palette = $appearance['editor-color-palette'];
 
-	foreach ( $editor_color_palette as $color_info ) {
-		$css .= <<<CSS
+    foreach ($editor_color_palette as $color_info) {
+        $css .= <<<CSS
 		.site-container .has-{$color_info['slug']}-color,
 		.site-container .wp-block-button .wp-block-button__link.has-{$color_info['slug']}-color,
 		.site-container .wp-block-button.is-style-outline .wp-block-button__link.has-{$color_info['slug']}-color {
@@ -143,8 +148,8 @@ function brief_inline_color_palette() {
 			background-color: {$color_info['color']};
 		}
 CSS;
-	}
+    }
 
-	return $css;
+    return $css;
 
 }
