@@ -132,16 +132,15 @@ function brief_reset_woocommerce_notice(): void
 
 }
 
-add_action('deactivated_plugin', 'brief_reset_woocommerce_notice_on_deactivation', 10, 2);
+add_action('deactivated_plugin', 'brief_reset_woocommerce_notice_on_deactivation');
 /**
  * Clears the Genesis Connect for WooCommerce plugin prompt on deactivation.
  *
  * @since 2.3.0
  *
  * @param  string  $plugin  The plugin slug.
- * @param  bool  $network_deactivating  Whether the plugin is deactivated for all sites in the network. or just the current site.
  */
-function brief_reset_woocommerce_notice_on_deactivation($plugin, $network_deactivating): void
+function brief_reset_woocommerce_notice_on_deactivation($plugin): void
 {
 
     // Conditional check to see if we're deactivating WooCommerce or Genesis Connect for WooCommerce.
