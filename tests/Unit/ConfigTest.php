@@ -7,6 +7,10 @@
  * the others without a `genesis_get_config()` caller in the theme); every value
  * here is what Genesis or the theme receives.
  *
+ * `config/block-editor-settings.php` is gone: it called two Customizer helpers the
+ * theme never defined, so it could not load, and nothing referenced it. It was
+ * pinned as failing first, in the commit before the one that deleted it.
+ *
  * @see config/
  */
 
@@ -170,14 +174,5 @@ describe('appearance', function (): void {
         Functions\expect('get_theme_mod')->once()->with('brief_link_color', '#fff385')->andReturn('#fff385');
 
         require dirname(__DIR__, 2).'/config/appearance.php';
-    });
-});
-
-describe('block-editor-settings', function (): void {
-    it('cannot load: it calls Customizer helpers the theme does not define', function (): void {
-        brief_stub_genesis();
-
-        expect(fn () => require dirname(__DIR__, 2).'/config/block-editor-settings.php')
-            ->toThrow(Error::class, 'Call to undefined function brief_customizer_get_default_link_highlight_color()');
     });
 });
