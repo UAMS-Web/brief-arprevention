@@ -1,43 +1,45 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Brief.
  *
  * This file adds the required CSS to the front end to the Brief Theme.
  *
- * @package Brief
  * @author  Minimal Genesis
  * @license GPL-2.0-or-later
+ *
  * @link    https://minimalgenesis.com/
  */
-
-add_action( 'wp_enqueue_scripts', 'brief_css' );
+add_action('wp_enqueue_scripts', 'brief_css');
 /**
  * Checks the settings for the link color, and accent color.
  * If any of these value are set the appropriate CSS is output.
  *
  * @since 2.2.3
  */
-function brief_css() {
+function brief_css()
+{
 
-	$appearance = genesis_get_config( 'appearance' );
+    $appearance = genesis_get_config('appearance');
 
-	$color_text   = get_theme_mod( 'brief_text_color', $appearance['default-colors']['text'] );
-	$color_link   = get_theme_mod( 'brief_link_color', $appearance['default-colors']['link'] );
-	$logo         = wp_get_attachment_image_src( get_theme_mod( 'custom_logo' ), 'full' );
+    $color_text = get_theme_mod('brief_text_color', $appearance['default-colors']['text']);
+    $color_link = get_theme_mod('brief_link_color', $appearance['default-colors']['link']);
+    $logo = wp_get_attachment_image_src(get_theme_mod('custom_logo'), 'full');
 
-	if ( $logo ) {
-		$logo_height           = absint( $logo[2] );
-		$logo_max_width        = get_theme_mod( 'brief_logo_width', 350 );
-		$logo_width            = absint( $logo[1] );
-		$logo_ratio            = $logo_width / max( $logo_height, 1 );
-		$logo_effective_height = min( $logo_width, $logo_max_width ) / max( $logo_ratio, 1 );
-		$logo_padding          = max( 0, ( 60 - $logo_effective_height ) / 2 );
-	}
+    if ($logo) {
+        $logo_height = absint($logo[2]);
+        $logo_max_width = get_theme_mod('brief_logo_width', 350);
+        $logo_width = absint($logo[1]);
+        $logo_ratio = $logo_width / max($logo_height, 1);
+        $logo_effective_height = min($logo_width, $logo_max_width) / max($logo_ratio, 1);
+        $logo_padding = max(0, (60 - $logo_effective_height) / 2);
+    }
 
-	$css = '';
-	
-	$css .= ( $appearance['default-colors']['text'] !== $color_text ) ? sprintf(
-		'
+    $css = '';
+
+    $css .= ($appearance['default-colors']['text'] !== $color_text) ? sprintf(
+        '
 
 		body,
 		.entry-title a,
@@ -120,11 +122,11 @@ function brief_css() {
 		}
 		
 		',
-		$color_text
-	) : '';
+        $color_text
+    ) : '';
 
-	$css .= ( $appearance['default-colors']['link'] !== $color_link ) ? sprintf(
-		'
+    $css .= ($appearance['default-colors']['link'] !== $color_link) ? sprintf(
+        '
 
 		.content a,
 		.genesis-nav-menu a:focus,
@@ -163,29 +165,29 @@ function brief_css() {
 		}
 		
 		',
-		$color_link
-	) : '';
+        $color_link
+    ) : '';
 
-	$css .= ( has_custom_logo() && ( 200 <= $logo_effective_height ) ) ?
-		'
+    $css .= (has_custom_logo() && ($logo_effective_height >= 200)) ?
+        '
 		.site-header {
 			position: static;
 		}
 		'
-	: '';
+    : '';
 
-	$css .= ( has_custom_logo() && ( 350 !== $logo_max_width ) ) ? sprintf(
-		'
+    $css .= (has_custom_logo() && ($logo_max_width !== 350)) ? sprintf(
+        '
 		.wp-custom-logo .site-container .title-area {
 			max-width: %spx;
 		}
 		',
-		$logo_max_width
-	) : '';
+        $logo_max_width
+    ) : '';
 
-	// Place menu below logo and center logo once it gets big.
-	$css .= ( has_custom_logo() && ( 600 <= $logo_max_width ) ) ?
-		'
+    // Place menu below logo and center logo once it gets big.
+    $css .= (has_custom_logo() && ($logo_max_width >= 600)) ?
+        '
 		.wp-custom-logo .title-area,
 		.wp-custom-logo .menu-toggle,
 		.wp-custom-logo .nav-primary {
@@ -207,19 +209,19 @@ function brief_css() {
 			}
 		}
 		'
-	: '';
+    : '';
 
-	$css .= ( has_custom_logo() && $logo_padding && ( 1 < $logo_effective_height ) ) ? sprintf(
-		'
+    $css .= (has_custom_logo() && $logo_padding && ($logo_effective_height > 1)) ? sprintf(
+        '
 		.wp-custom-logo .title-area {
 			padding-top: %spx;
 		}
 		',
-		$logo_padding + 5
-	) : '';
+        $logo_padding + 5
+    ) : '';
 
-	if ( $css ) {
-		wp_add_inline_style( genesis_get_theme_handle(), $css );
-	}
+    if ($css) {
+        wp_add_inline_style(genesis_get_theme_handle(), $css);
+    }
 
 }

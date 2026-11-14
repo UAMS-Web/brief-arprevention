@@ -1,0 +1,163 @@
+parameters:
+	ignoreErrors:
+		-
+			rawMessage: Function brief_customizer_get_default_accent_color not found.
+			identifier: function.notFound
+			count: 1
+			path: config/block-editor-settings.php
+
+		-
+			rawMessage: Function brief_customizer_get_default_link_highlight_color not found.
+			identifier: function.notFound
+			count: 2
+			path: config/block-editor-settings.php
+
+		-
+			rawMessage: Function genesis_get_config not found.
+			identifier: function.notFound
+			count: 4
+			path: functions.php
+
+		-
+			rawMessage: Function genesis_get_theme_handle not found.
+			identifier: function.notFound
+			count: 4
+			path: functions.php
+
+		-
+			rawMessage: Function genesis_get_theme_version not found.
+			identifier: function.notFound
+			count: 2
+			path: functions.php
+
+		-
+			rawMessage: Function genesis_is_amp not found.
+			identifier: function.notFound
+			count: 1
+			path: functions.php
+
+		-
+			rawMessage: Function genesis_unregister_layout not found.
+			identifier: function.notFound
+			count: 3
+			path: functions.php
+
+		-
+			rawMessage: Function genesis_get_config not found.
+			identifier: function.notFound
+			count: 1
+			path: lib/customize.php
+
+		-
+			rawMessage: Function genesis_get_config not found.
+			identifier: function.notFound
+			count: 3
+			path: lib/gutenberg/init.php
+
+		-
+			rawMessage: Function genesis_get_theme_handle not found.
+			identifier: function.notFound
+			count: 3
+			path: lib/gutenberg/init.php
+
+		-
+			rawMessage: Function genesis_get_theme_version not found.
+			identifier: function.notFound
+			count: 2
+			path: lib/gutenberg/init.php
+
+		-
+			rawMessage: Function genesis_get_config not found.
+			identifier: function.notFound
+			count: 3
+			path: lib/gutenberg/inline-styles.php
+
+		-
+			rawMessage: Function genesis_get_theme_handle not found.
+			identifier: function.notFound
+			count: 2
+			path: lib/gutenberg/inline-styles.php
+
+		-
+			rawMessage: Function genesis_get_config not found.
+			identifier: function.notFound
+			count: 1
+			path: lib/output.php
+
+		-
+			rawMessage: Function genesis_get_theme_handle not found.
+			identifier: function.notFound
+			count: 1
+			path: lib/output.php
+
+		-
+			rawMessage: Function genesis_get_config not found.
+			identifier: function.notFound
+			count: 1
+			path: lib/theme-defaults.php
+
+		-
+			rawMessage: 'Callback expects 0 parameters, $accepted_args is set to 2.'
+			identifier: arguments.count
+			count: 1
+			path: lib/woocommerce/woocommerce-notice.php
+
+		-
+			rawMessage: Action callback returns string but should not return anything.
+			identifier: return.void
+			count: 1
+			path: lib/woocommerce/woocommerce-output.php
+
+		-
+			rawMessage: 'Function brief_woocommerce_css() should return string but return statement is missing.'
+			identifier: return.missing
+			count: 2
+			path: lib/woocommerce/woocommerce-output.php
+
+		-
+			rawMessage: Function genesis_get_config not found.
+			identifier: function.notFound
+			count: 1
+			path: lib/woocommerce/woocommerce-output.php
+
+		-
+			rawMessage: Function genesis_get_theme_handle not found.
+			identifier: function.notFound
+			count: 2
+			path: lib/woocommerce/woocommerce-output.php
+
+		-
+			rawMessage: Function genesis_get_theme_version not found.
+			identifier: function.notFound
+			count: 1
+			path: lib/woocommerce/woocommerce-output.php
+
+		-
+			rawMessage: 'Undefined variable: $color_accent'
+			identifier: variable.undefined
+			count: 3
+			path: lib/woocommerce/woocommerce-output.php
+
+		-
+			rawMessage: 'Callback expects 1 parameter, $accepted_args is set to 2.'
+			identifier: arguments.count
+			count: 1
+			path: lib/woocommerce/woocommerce-setup.php
+
+		-
+			rawMessage: Function genesis_site_layout not found.
+			identifier: function.notFound
+			count: 1
+			path: lib/woocommerce/woocommerce-setup.php
+
+		-
+			rawMessage: Function genesis not found.
+			identifier: function.notFound
+			count: 1
+			path: page-templates/blocks.php
+
+		-
+			rawMessage: Function genesis not found.
+			identifier: function.notFound
+			count: 1
+			path: page-templates/landing.php
