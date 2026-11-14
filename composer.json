@@ -1,0 +1,15 @@
+{
+    "name": "uams-web/brief-arprevention",
+    "description": "Brief : AR Prevention, a child theme of the Genesis Framework.",
+    "type": "wordpress-theme",
+    "license": "GPL-2.0-or-later",
+    "require": {
+        "php": ">=8.2"
+    },
+    "config": {
+        "platform": {
+            "php": "8.4.27"
+        },
+        "sort-packages": true
+    }
+}
