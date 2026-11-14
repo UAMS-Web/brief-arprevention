@@ -23,13 +23,13 @@ function brief_css(): void
 
     $appearance = genesis_get_config('appearance');
 
-    $color_text = get_theme_mod('brief_text_color', $appearance['default-colors']['text']);
-    $color_link = get_theme_mod('brief_link_color', $appearance['default-colors']['link']);
-    $logo = wp_get_attachment_image_src(get_theme_mod('custom_logo'), 'full');
+    $color_text = brief_theme_mod_string('brief_text_color', $appearance['default-colors']['text']);
+    $color_link = brief_theme_mod_string('brief_link_color', $appearance['default-colors']['link']);
+    $logo = wp_get_attachment_image_src(brief_theme_mod_int('custom_logo', 0), 'full');
 
     if ($logo) {
         $logo_height = absint($logo[2]);
-        $logo_max_width = get_theme_mod('brief_logo_width', 350);
+        $logo_max_width = brief_theme_mod_int('brief_logo_width', 350);
         $logo_width = absint($logo[1]);
         $logo_ratio = $logo_width / max($logo_height, 1);
         $logo_effective_height = min($logo_width, $logo_max_width) / max($logo_ratio, 1);

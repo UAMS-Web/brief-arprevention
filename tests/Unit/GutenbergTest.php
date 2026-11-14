@@ -40,17 +40,19 @@ it('declares editor support at file scope', function (): void {
 /**
  * The file-scope add_theme_support() calls, keyed by feature.
  *
- * @return array<string, array<int, mixed>>
+ * @return array<string, mixed>
  */
 function collect_features(): array
 {
     $features = [];
 
     foreach (brief_recorded_calls('add_theme_support') as $call) {
-        $features[$call[0]] = array_slice($call, 1);
+        if (is_string($call[0])) {
+            $features[$call[0]] = array_key_exists(1, $call) ? $call[1] : [];
+        }
     }
 
-    return array_map(fn (array $arguments) => $arguments === [] ? [] : $arguments[0], $features);
+    return $features;
 }
 
 it('enqueues the front-end block stylesheet after the theme stylesheet', function (): void {
@@ -155,6 +157,29 @@ describe('inline styles', function (): void {
 
         expect(brief_inline_font_sizes())->toBe('');
     });
+
+    it('builds no font size CSS when the support holds no list of sizes', function (mixed $support): void {
+        when('get_theme_support')->justReturn($support);
+
+        expect(brief_inline_font_sizes())->toBe('');
+    })->with([
+        'an empty list' => [[]],
+        'a string where the list belongs' => [['small']],
+        'no first entry' => [['a' => []]],
+    ]);
+
+    it('skips a font size that has no text slug or no plain size', function (mixed $size): void {
+        when('get_theme_support')->justReturn([[$size, ['slug' => 'kept', 'size' => 20]]]);
+
+        expect(brief_inline_font_sizes())->toContain('.has-kept-font-size')
+            ->and(substr_count(brief_inline_font_sizes(), 'font-size {'))->toBe(1);
+    })->with([
+        'not an array' => ['small'],
+        'no slug' => [['size' => 10]],
+        'a slug that is not text' => [['slug' => 7, 'size' => 10]],
+        'no size' => [['slug' => 'small']],
+        'a size that is not a plain value' => [['slug' => 'small', 'size' => [10]]],
+    ]);
 
     it('builds text and background rules for each palette color', function (): void {
         brief_stub_genesis(['brief_text_color' => '#111111', 'brief_link_color' => '#222222']);

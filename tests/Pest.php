@@ -44,6 +44,38 @@ uses()
     ->in('Unit');
 
 /**
+ * What loading the theme registered and called, snapshotted because tearDown() discards it.
+ *
+ * `hooks` is keyed by type, hook and callback; each registration is `[priority, accepted args]`.
+ * `calls` holds the argument lists of the file-scope calls that `brief_load_theme()` records.
+ *
+ * @return array{hooks: array<string, array<string, array<string, list<array{0: int, 1: int}>>>>, calls: array<string, list<list<mixed>>>}
+ */
+function &brief_theme_load_state(): array
+{
+    static $state = ['hooks' => [], 'calls' => []];
+
+    return $state;
+}
+
+/**
+ * The hooks Brain Monkey has recorded as added, keyed by type and hook.
+ *
+ * Brain Monkey keeps them in a private property of no declared type; each entry is
+ * `[callback, priority, accepted args]`, as its `HookStorage::pushToAdded()` writes it, with the
+ * callback as a `Brain\Monkey\Name\CallbackStringForm`.
+ *
+ * @return array<string, array<string, list<array{0: Stringable, 1: int, 2: int}>>>
+ */
+function brief_added_hooks(): array
+{
+    $storage = new ReflectionProperty(HookStorage::class, 'storage');
+
+    // @phpstan-ignore offsetAccess.nonOffsetAccessible, return.type (a private property of unknown type; see the shape above)
+    return $storage->getValue(Container::instance()->hookStorage())['added'];
+}
+
+/**
  * The priority a callback was registered at while functions.php loaded, or null
  * when it was not registered, or registered more than once.
  *
@@ -51,7 +83,7 @@ uses()
  */
 function brief_registered_hooks(string $type, string $hook, string $callback): ?int
 {
-    $registrations = $GLOBALS['brief_registered_hooks'][$type][$hook][$callback] ?? [];
+    $registrations = brief_theme_load_state()['hooks'][$type][$hook][$callback] ?? [];
 
     return count($registrations) === 1 ? $registrations[0][0] : null;
 }
@@ -63,7 +95,7 @@ function brief_registered_hooks(string $type, string $hook, string $callback): ?
  */
 function brief_recorded_calls(string $function): array
 {
-    return $GLOBALS['brief_recorded_calls'][$function] ?? [];
+    return brief_theme_load_state()['calls'][$function] ?? [];
 }
 
 /**
@@ -108,7 +140,7 @@ function brief_load_theme(): void
 
     $root = dirname(__DIR__);
 
-    $GLOBALS['brief_recorded_calls'] = [];
+    $state = &brief_theme_load_state();
 
     when('get_template_directory')->justReturn($GLOBALS['brief_genesis_stand_in']);
     when('get_stylesheet_directory')->justReturn($root);
@@ -134,8 +166,8 @@ function brief_load_theme(): void
     add_action('genesis_footer', 'genesis_footer_markup_close', 15);
 
     foreach (['add_theme_support', 'add_editor_style', 'add_image_size', 'unregister_sidebar', 'genesis_unregister_layout', 'genesis_register_responsive_menus', 'remove_theme_support', 'genesis'] as $recorded) {
-        when($recorded)->alias(function (...$arguments) use ($recorded): void {
-            $GLOBALS['brief_recorded_calls'][$recorded][] = $arguments;
+        when($recorded)->alias(function (...$arguments) use ($recorded, &$state): void {
+            $state['calls'][$recorded][] = $arguments;
         });
     }
 
@@ -154,15 +186,10 @@ function brief_load_theme(): void
     require_once $root.'/page-templates/blocks.php';
     require_once $root.'/page-templates/landing.php';
 
-    $GLOBALS['brief_registered_hooks'] = [];
-
-    $storage = new ReflectionProperty(HookStorage::class, 'storage');
-    $added = $storage->getValue(Container::instance()->hookStorage())['added'];
-
-    foreach ($added as $type => $hooks) {
+    foreach (brief_added_hooks() as $type => $hooks) {
         foreach ($hooks as $hook => $entries) {
             foreach ($entries as $entry) {
-                $GLOBALS['brief_registered_hooks'][$type][$hook][(string) $entry[0]][] = [$entry[1], $entry[2]];
+                $state['hooks'][$type][$hook][(string) $entry[0]][] = [$entry[1], $entry[2]];
             }
         }
     }
@@ -189,7 +216,7 @@ function brief_assert_theme_load(): void
 
     $hooks = [];
 
-    foreach ($GLOBALS['brief_registered_hooks'] as $type => $by_hook) {
+    foreach (brief_theme_load_state()['hooks'] as $type => $by_hook) {
         foreach ($by_hook as $hook => $callbacks) {
             foreach ($callbacks as $callback => $registrations) {
                 foreach ($registrations as [$priority, $accepted_args]) {
@@ -202,7 +229,7 @@ function brief_assert_theme_load(): void
     $expected = require __DIR__.'/load-manifest.php';
 
     expect($hooks)->toEqualCanonicalizing($expected['hooks'])
-        ->and($GLOBALS['brief_recorded_calls'])->toBe($expected['calls']);
+        ->and(brief_theme_load_state()['calls'])->toBe($expected['calls']);
 }
 
 /**

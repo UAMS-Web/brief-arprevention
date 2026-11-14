@@ -60,3 +60,44 @@ function brief_color_brightness($color, $change): string
     return '#'.sprintf('%x%x%x', $red, $green, $blue);
 
 }
+
+/**
+ * Reads a theme mod that holds text, such as a color.
+ *
+ * A stored value that is not a string (a corrupted option, a value left by another
+ * theme) is replaced by the default, so callers can build CSS from it safely.
+ *
+ * @since 3.0.0
+ *
+ * @param  string  $name  The theme mod name.
+ * @param  string  $default  The value to use when the mod is unset or not a string.
+ * @return string The stored text, or the default.
+ */
+function brief_theme_mod_string(string $name, string $default): string
+{
+
+    $value = get_theme_mod($name, $default);
+
+    return is_string($value) ? $value : $default;
+
+}
+
+/**
+ * Reads a theme mod that holds a whole number, such as an attachment id or a width.
+ *
+ * A stored value that is not numeric is replaced by the default.
+ *
+ * @since 3.0.0
+ *
+ * @param  string  $name  The theme mod name.
+ * @param  int  $default  The value to use when the mod is unset or not numeric.
+ * @return int The stored number as a non-negative integer, or the default.
+ */
+function brief_theme_mod_int(string $name, int $default): int
+{
+
+    $value = get_theme_mod($name, $default);
+
+    return is_numeric($value) ? absint($value) : $default;
+
+}

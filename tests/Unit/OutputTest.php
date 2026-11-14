@@ -75,6 +75,23 @@ it('adds both color blocks, text first, when both colors are custom', function (
 });
 
 describe('the logo', function (): void {
+    it('looks the logo up by its attachment id, and by 0 when none is set', function (array $mods, int $id): void {
+        brief_stub_genesis($mods);
+        when('absint')->alias(fn ($value): int => abs((int) $value));
+        Functions\expect('wp_get_attachment_image_src')->once()->with($id, 'full')->andReturn(false);
+
+        brief_css();
+    })->with([
+        'a stored id' => [['custom_logo' => '7'], 7],
+        'no logo set' => [[], 0],
+    ]);
+
+    it('reads the logo and its maximum width as whole numbers', function (): void {
+        $css = (string) brief_run_css(['brief_logo_width' => '350'], ['u', 700, 100]);
+
+        expect($css)->not->toContain('max-width');
+    });
+
     it('adds the logo rules after the color rules instead of replacing them', function (): void {
         $css = (string) brief_run_css(['brief_text_color' => '#112233', 'brief_logo_width' => 400], ['u', 400, 200]);
 

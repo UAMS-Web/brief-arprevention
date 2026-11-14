@@ -51,7 +51,7 @@ function brief_woocommerce_css(): void
 
     $appearance = genesis_get_config('appearance');
 
-    $color_text = get_theme_mod('brief_text_color', $appearance['default-colors']['text']);
+    $color_text = brief_theme_mod_string('brief_text_color', $appearance['default-colors']['text']);
 
     $woo_css = '';
 
