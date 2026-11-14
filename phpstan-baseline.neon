@@ -121,12 +121,6 @@ parameters:
 			path: lib/woocommerce/woocommerce-output.php
 
 		-
-			rawMessage: 'Undefined variable: $color_accent'
-			identifier: variable.undefined
-			count: 3
-			path: lib/woocommerce/woocommerce-output.php
-
-		-
 			rawMessage: 'Callback expects 1 parameter, $accepted_args is set to 2.'
 			identifier: arguments.count
 			count: 1

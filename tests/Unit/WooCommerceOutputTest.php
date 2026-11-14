@@ -95,11 +95,7 @@ it('recolors the WooCommerce text and buttons from a custom text color', functio
         ->not->toContain('border-top-color');
 });
 
-it('raises two warnings for the accent color that nothing defines', function (): void {
-    $result = brief_run_woocommerce_css();
-
-    expect($result['warnings'])->toBe([
-        'Undefined array key "accent"',
-        'Undefined variable $color_accent',
-    ]);
+it('raises no warning', function (): void {
+    expect(brief_run_woocommerce_css()['warnings'])->toBe([])
+        ->and(brief_run_woocommerce_css(['brief_text_color' => '#112233'])['warnings'])->toBe([]);
 });
