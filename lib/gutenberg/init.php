@@ -57,8 +57,8 @@ add_filter('body_class', 'brief_blocks_body_classes');
  *
  * @since 2.8.0
  *
- * @param  array  $classes  The original classes.
- * @return array The modified classes.
+ * @param  array<int, string>  $classes  The original classes.
+ * @return array<int, string> The modified classes.
  */
 function brief_blocks_body_classes($classes)
 {

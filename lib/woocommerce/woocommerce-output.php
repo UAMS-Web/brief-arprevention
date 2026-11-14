@@ -15,11 +15,11 @@ add_filter('woocommerce_enqueue_styles', 'brief_woocommerce_styles');
 /**
  * Enqueues the theme's custom WooCommerce styles to the WooCommerce plugin.
  *
- * @param  array  $enqueue_styles  The WooCommerce styles to enqueue.
+ * @param  array<string, array<string, mixed>>  $enqueue_styles  The WooCommerce styles to enqueue.
  *
  * @since 2.3.0
  *
- * @return array Modified WooCommerce styles to enqueue.
+ * @return array<string, array<string, mixed>> Modified WooCommerce styles to enqueue.
  */
 function brief_woocommerce_styles($enqueue_styles)
 {

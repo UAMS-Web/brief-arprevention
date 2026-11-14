@@ -163,8 +163,8 @@ add_filter('wp_nav_menu_args', 'brief_secondary_menu_args');
  *
  * @since 2.2.3
  *
- * @param  array  $args  Original menu options.
- * @return array Menu options with depth set to 1.
+ * @param  array<string, mixed>  $args  Original menu options.
+ * @return array<string, mixed> Menu options with depth set to 1.
  */
 function brief_secondary_menu_args($args)
 {
@@ -216,8 +216,8 @@ add_filter('genesis_comment_list_args', 'brief_comments_gravatar');
  *
  * @since 2.2.3
  *
- * @param  array  $args  Gravatar settings.
- * @return array Gravatar settings with modified size.
+ * @param  array<string, mixed>  $args  Gravatar settings.
+ * @return array<string, mixed> Gravatar settings with modified size.
  */
 function brief_comments_gravatar($args)
 {
