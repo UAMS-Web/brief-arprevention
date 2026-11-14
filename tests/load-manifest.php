@@ -60,35 +60,10 @@ return [
         'filters body_class brief_blocks_body_classes 10',
     ],
     'calls' => [
-        'genesis_register_responsive_menus' => [
-            [
-                [
-                    'script' => [
-                        'mainMenu' => '',
-                        'menuClasses' => [
-                            'others' => ['.nav-primary'],
-                        ],
-                    ],
-                    'extras' => [
-                        'media_query_width' => '960px',
-                    ],
-                ],
-            ],
-        ],
-        'add_image_size' => [
-            ['sidebar-featured', 75, 75, true],
-            ['genesis-singular-images', 702, 526, true],
-        ],
-        'unregister_sidebar' => [
-            ['header-right'],
-            ['sidebar-alt'],
-        ],
-        'genesis_unregister_layout' => [
-            ['content-sidebar-sidebar'],
-            ['sidebar-content-sidebar'],
-            ['sidebar-sidebar-content'],
-        ],
         'add_theme_support' => [
+            ['wc-product-gallery-lightbox'],
+            ['wc-product-gallery-slider'],
+            ['wc-product-gallery-zoom'],
             ['editor-styles'],
             ['align-wide'],
             ['responsive-embeds'],
@@ -132,6 +107,34 @@ return [
                     ],
                 ],
             ],
+        ],
+        'genesis_register_responsive_menus' => [
+            [
+                [
+                    'script' => [
+                        'mainMenu' => '',
+                        'menuClasses' => [
+                            'others' => ['.nav-primary'],
+                        ],
+                    ],
+                    'extras' => [
+                        'media_query_width' => '960px',
+                    ],
+                ],
+            ],
+        ],
+        'add_image_size' => [
+            ['sidebar-featured', 75, 75, true],
+            ['genesis-singular-images', 702, 526, true],
+        ],
+        'unregister_sidebar' => [
+            ['header-right'],
+            ['sidebar-alt'],
+        ],
+        'genesis_unregister_layout' => [
+            ['content-sidebar-sidebar'],
+            ['sidebar-content-sidebar'],
+            ['sidebar-sidebar-content'],
         ],
         'add_editor_style' => [
             ['/lib/gutenberg/style-editor.css'],
