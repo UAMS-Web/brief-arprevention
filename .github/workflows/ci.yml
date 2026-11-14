@@ -12,7 +12,9 @@ name: CI
 #   skip before a runner is dispatched and bill no minutes; where it is unset (this public
 #   repository) they run. A skipped run is not a passing run: nothing has checked the pull
 #   request while the switch is off.
-# - Mutation is off (`mutate: false`) until its own ticket. That also skips `mutate-ignore`.
+# - Mutation runs through `composer mutate`, which names the test files and the first-party PHP
+#   paths. A pull request or push mutates only the changed files under `mutate-paths`; a manual
+#   dispatch mutates everything. `mutate-ignore` scans the same paths for annotations.
 # - Every job runs on `ubuntu-latest` (`linux-only`): the theme has no platform-specific code.
 # - `floor-lint` parses every shipped PHP file under PHP 8.2, the supported floor.
 # - `download-archive` checks that the GitHub download holds only what the theme runs, with the
@@ -46,7 +48,8 @@ jobs:
     uses: UAMS-Web/uams-ci-workflows/.github/workflows/ci.yml@v0.10.1
     with:
       linux-only: true
-      mutate: false
+      mutate-paths: functions.php lib config page-templates
+      mutate-ignore-paths: functions.php lib config page-templates
       download-archive: true
       download-archive-command: node .claude/skills/download-archive-check/check-download-archive.mjs
       floor-lint: true
