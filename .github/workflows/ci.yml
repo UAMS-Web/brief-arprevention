@@ -1,0 +1,72 @@
+name: CI
+
+# Calls the shared job chain in UAMS-Web/uams-ci-workflows and adds the one job a ruleset
+# requires, `CI`. Copied from .claude/skills/code-quality/templates/ci.yml in
+# UAMS-Web/uams-claude-skills; the chain's inputs are listed in the header of the reusable
+# workflow.
+#
+# - `uses:` names a release tag, never a branch, so a change to the shared chain reaches this
+#   repository only when the tag here moves.
+# - The `RUN_REMOTE_CI` gate: `checks` and `CI` carry `vars.RUN_REMOTE_CI != 'false'`, as the
+#   pull-request body workflows do. Where the variable is `false` (a private repository) both
+#   skip before a runner is dispatched and bill no minutes; where it is unset (this public
+#   repository) they run. A skipped run is not a passing run: nothing has checked the pull
+#   request while the switch is off.
+# - Mutation is off (`mutate: false`) until its own ticket. That also skips `mutate-ignore`.
+# - Every job runs on `ubuntu-latest` (`linux-only`): the theme has no platform-specific code.
+# - `floor-lint` parses every shipped PHP file under PHP 8.2, the supported floor.
+# - The jobs check out this repository, so it carries `.github/actions/setup/action.yml`, the
+#   synced `.claude/skills` scripts, the `test:pint`, `test:refactor`, `stan` and `test`
+#   Composer scripts, and `tests/skip-baseline.json`.
+# - Keep the job named `CI` and the call named `checks`: `CI` needs the call by that name, and a
+#   ruleset requires the context `CI`.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# A new push to a pull request cancels that pull request's stale run. Every other run gets a
+# group of its own, keyed on the commit, so a later push never cancels it.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  # The shared chain. Its checks report as `checks / <job name> (<operating system>)`.
+  checks:
+    if: vars.RUN_REMOTE_CI != 'false'
+    uses: UAMS-Web/uams-ci-workflows/.github/workflows/ci.yml@v0.10.1
+    with:
+      linux-only: true
+      mutate: false
+      floor-lint: true
+      floor-lint-php: '8.2'
+      floor-lint-command: find . -name '*.php' -not -path './vendor/*' -not -path './tests/*' -not -path './node_modules/*' -not -path './.claude/*' -not -path './.agents/*' -print0 | xargs -0 -n1 php -l
+
+  # The one check a ruleset requires from this workflow. Keep `needs:` naming the call.
+  ci:
+    name: CI
+    needs: [checks]
+    if: always() && vars.RUN_REMOTE_CI != 'false'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      # `skipped` and `cancelled` fail as well as `failure`: a call that did not run proved nothing.
+      - name: Every needed job succeeded
+        env:
+          RESULTS: ${{ join(needs.*.result, ' ') }}
+        run: |
+          echo "Needed job results: $RESULTS"
+          # An empty list (an emptied `needs:`, a dropped `env:`) would run no iterations and pass having read nothing.
+          if [ -z "$RESULTS" ]; then echo "::error::No needed job results to read"; exit 1; fi
+          for result in $RESULTS; do
+            if [ "$result" != "success" ]; then
+              echo "::error::A needed job reported $result"
+              exit 1
+            fi
+          done
