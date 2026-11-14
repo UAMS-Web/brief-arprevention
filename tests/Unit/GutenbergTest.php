@@ -26,7 +26,7 @@ it('registers its callbacks on their hooks', function (string $type, string $hoo
 
 it('declares editor support at file scope', function (): void {
     brief_stub_genesis();
-    $appearance = require dirname(__DIR__, 2).'/config/appearance.php';
+    $appearance = brief_require_array(dirname(__DIR__, 2).'/config/appearance.php');
     $features = collect_features();
 
     expect($features['editor-styles'])->toBe([])

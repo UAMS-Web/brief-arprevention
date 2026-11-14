@@ -37,6 +37,8 @@ uses()
     ->afterEach(function (): void {
         brief_assert_theme_load();
 
+        // Pest binds `$this` to the running test inside this closure, which PHPStan cannot see.
+        // @phpstan-ignore method.nonObject
         $this->addToAssertionCount(Mockery::getContainer()->mockery_getExpectationCount());
 
         tearDown();
@@ -99,12 +101,36 @@ function brief_recorded_calls(string $function): array
 }
 
 /**
+ * Loads a PHP file that returns an array, such as a file under `config/` or the load manifest.
+ *
+ * @return array<mixed>
+ */
+function brief_require_array(string $path): array
+{
+    $value = require $path;
+
+    if (! is_array($value)) {
+        throw new UnexpectedValueException("{$path} did not return an array.");
+    }
+
+    return $value;
+}
+
+/**
+ * WordPress's `absint()`: the absolute value of a whole number, 0 for anything that is not numeric.
+ */
+function brief_absint(mixed $value): int
+{
+    return is_numeric($value) ? abs((int) $value) : 0;
+}
+
+/**
  * Stand-ins for the Genesis helpers the theme calls, so a callback can run.
  *
  * `genesis_get_config()` reads the theme's real file under `config/`; the theme
  * handle and version are fixed values the tests assert against.
  *
- * @param  array<string, mixed>  $theme_mods  Values `get_theme_mod()` returns by name, else its default.
+ * @param  array<mixed>  $theme_mods  Values `get_theme_mod()` returns by name, else its default.
  */
 function brief_stub_genesis(array $theme_mods = []): void
 {
@@ -226,7 +252,7 @@ function brief_assert_theme_load(): void
         }
     }
 
-    $expected = require __DIR__.'/load-manifest.php';
+    $expected = brief_require_array(__DIR__.'/load-manifest.php');
 
     expect($hooks)->toEqualCanonicalizing($expected['hooks'])
         ->and(brief_theme_load_state()['calls'])->toBe($expected['calls']);

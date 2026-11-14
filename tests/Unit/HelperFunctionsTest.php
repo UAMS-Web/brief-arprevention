@@ -63,21 +63,21 @@ describe('the theme mod readers', function (): void {
     ]);
 
     it('reads a whole-number theme mod by name, with its default', function (): void {
-        when('absint')->alias(fn ($value): int => abs((int) $value));
+        when('absint')->alias('brief_absint');
         Functions\expect('get_theme_mod')->once()->with('brief_logo_width', 350)->andReturn('400');
 
         expect(brief_theme_mod_int('brief_logo_width', 350))->toBe(400);
     });
 
     it('makes a whole-number theme mod non-negative', function (): void {
-        when('absint')->alias(fn ($value): int => abs((int) $value));
+        when('absint')->alias('brief_absint');
         when('get_theme_mod')->justReturn(-120);
 
         expect(brief_theme_mod_int('brief_logo_width', 350))->toBe(120);
     });
 
     it('falls back to the default for a whole-number theme mod that is not numeric', function (mixed $stored): void {
-        when('absint')->alias(fn ($value): int => abs((int) $value));
+        when('absint')->alias('brief_absint');
         when('get_theme_mod')->justReturn($stored);
 
         expect(brief_theme_mod_int('brief_logo_width', 350))->toBe(350);

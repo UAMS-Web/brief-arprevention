@@ -258,6 +258,8 @@ function hide_menu(): void
         remove_submenu_page('themes.php', 'customize.php');
 
         // Remove Customize from the Appearance submenu
+        // The `$submenu` global is untyped in WordPress core: it holds menu items keyed by parent slug, then position.
+        /** @var array<string, array<int, array<int, string>>> $submenu */
         global $submenu;
         unset($submenu['themes.php'][6]);
     }

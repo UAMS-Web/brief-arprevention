@@ -1,24 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			rawMessage: Function genesis_get_config not found.
-			identifier: function.notFound
-			count: 4
-			path: functions.php
-
-		-
-			rawMessage: Function genesis_get_theme_handle not found.
-			identifier: function.notFound
-			count: 4
-			path: functions.php
-
-		-
-			rawMessage: Function genesis_get_theme_version not found.
-			identifier: function.notFound
-			count: 2
-			path: functions.php
-
-		-
 			rawMessage: Function genesis_is_amp not found.
 			identifier: function.notFound
 			count: 1
@@ -31,82 +13,10 @@ parameters:
 			path: functions.php
 
 		-
-			rawMessage: Function genesis_get_config not found.
-			identifier: function.notFound
-			count: 1
-			path: lib/customize.php
-
-		-
-			rawMessage: Function genesis_get_config not found.
-			identifier: function.notFound
-			count: 3
-			path: lib/gutenberg/init.php
-
-		-
-			rawMessage: Function genesis_get_theme_handle not found.
-			identifier: function.notFound
-			count: 3
-			path: lib/gutenberg/init.php
-
-		-
-			rawMessage: Function genesis_get_theme_version not found.
-			identifier: function.notFound
-			count: 2
-			path: lib/gutenberg/init.php
-
-		-
-			rawMessage: Function genesis_get_config not found.
-			identifier: function.notFound
-			count: 3
-			path: lib/gutenberg/inline-styles.php
-
-		-
-			rawMessage: Function genesis_get_theme_handle not found.
-			identifier: function.notFound
-			count: 2
-			path: lib/gutenberg/inline-styles.php
-
-		-
-			rawMessage: Function genesis_get_config not found.
-			identifier: function.notFound
-			count: 1
-			path: lib/output.php
-
-		-
-			rawMessage: Function genesis_get_theme_handle not found.
-			identifier: function.notFound
-			count: 1
-			path: lib/output.php
-
-		-
-			rawMessage: Function genesis_get_config not found.
-			identifier: function.notFound
-			count: 1
-			path: lib/theme-defaults.php
-
-		-
 			rawMessage: 'Callback expects 0 parameters, $accepted_args is set to 2.'
 			identifier: arguments.count
 			count: 1
 			path: lib/woocommerce/woocommerce-notice.php
-
-		-
-			rawMessage: Function genesis_get_config not found.
-			identifier: function.notFound
-			count: 1
-			path: lib/woocommerce/woocommerce-output.php
-
-		-
-			rawMessage: Function genesis_get_theme_handle not found.
-			identifier: function.notFound
-			count: 2
-			path: lib/woocommerce/woocommerce-output.php
-
-		-
-			rawMessage: Function genesis_get_theme_version not found.
-			identifier: function.notFound
-			count: 1
-			path: lib/woocommerce/woocommerce-output.php
 
 		-
 			rawMessage: 'Callback expects 1 parameter, $accepted_args is set to 2.'

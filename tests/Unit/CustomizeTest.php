@@ -45,14 +45,23 @@ describe('brief_customizer_register', function (): void {
 
         $settings = [];
         $controls = [];
-        $manager = Mockery::mock(WP_Customize_Manager::class);
+        $logo_control = null;
+        $manager = Mockery::mock();
         $manager->shouldReceive('add_setting')->times(3)->andReturnUsing(function (string $id, array $args) use (&$settings): void {
             $settings[$id] = $args;
         });
-        $manager->shouldReceive('add_control')->times(3)->andReturnUsing(function (...$arguments) use (&$controls): void {
-            $controls[] = $arguments;
+        $manager->shouldReceive('add_control')->times(3)->andReturnUsing(function (mixed $control, mixed $args = null) use (&$controls, &$logo_control): void {
+            if ($control instanceof WP_Customize_Color_Control) {
+                $controls[] = $control;
+
+                return;
+            }
+
+            $logo_control = [$control, $args];
         });
 
+        // A Mockery stand-in for WP_Customize_Manager, which the WordPress stubs declare final, so no mock can be typed as it.
+        // @phpstan-ignore argument.type
         brief_customizer_register($manager);
 
         expect($settings)->toBe([
@@ -64,23 +73,23 @@ describe('brief_customizer_register', function (): void {
                 'validate_callback' => 'brief_validate_logo_width',
             ],
         ])
-            ->and($controls[0][0])->toBeInstanceOf('WP_Customize_Color_Control')
-            ->and($controls[0][0]->manager)->toBe($manager)
-            ->and($controls[0][0]->id)->toBe('brief_text_color')
-            ->and($controls[0][0]->args)->toBe([
+            ->and($controls[0])->toBeInstanceOf('WP_Customize_Color_Control')
+            ->and($controls[0]->manager)->toBe($manager)
+            ->and($controls[0]->id)->toBe('brief_text_color')
+            ->and(get_object_vars($controls[0])['args'])->toBe([
                 'description' => 'Change the default color for body, heading, button background, and other text.',
                 'label' => 'Text Color',
                 'section' => 'colors',
                 'settings' => 'brief_text_color',
             ])
-            ->and($controls[1][0]->id)->toBe('brief_link_color')
-            ->and($controls[1][0]->args)->toBe([
+            ->and($controls[1]->id)->toBe('brief_link_color')
+            ->and(get_object_vars($controls[1])['args'])->toBe([
                 'description' => 'Change the default link highlight color.',
                 'label' => 'Link Color',
                 'section' => 'colors',
                 'settings' => 'brief_link_color',
             ])
-            ->and($controls[2])->toBe([
+            ->and($logo_control)->toBe([
                 'brief_logo_width',
                 [
                     'label' => 'Logo Width',

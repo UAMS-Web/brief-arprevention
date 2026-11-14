@@ -22,13 +22,13 @@ use Brain\Monkey\Functions;
  * Loads a config file with the given theme mods.
  *
  * @param  array<string, mixed>  $mods
- * @return array<string, mixed>
+ * @return array<mixed>
  */
 function brief_config(string $name, array $mods = []): array
 {
     brief_stub_genesis($mods);
 
-    return require dirname(__DIR__, 2).'/config/'.$name.'.php';
+    return brief_require_array(dirname(__DIR__, 2).'/config/'.$name.'.php');
 }
 
 it('lists the accessibility features', function (): void {
