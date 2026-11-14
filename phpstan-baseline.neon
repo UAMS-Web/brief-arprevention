@@ -1,18 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			rawMessage: Function brief_customizer_get_default_accent_color not found.
-			identifier: function.notFound
-			count: 1
-			path: config/block-editor-settings.php
-
-		-
-			rawMessage: Function brief_customizer_get_default_link_highlight_color not found.
-			identifier: function.notFound
-			count: 2
-			path: config/block-editor-settings.php
-
-		-
 			rawMessage: Function genesis_get_config not found.
 			identifier: function.notFound
 			count: 4
