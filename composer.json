@@ -27,6 +27,7 @@
     "scripts": {
         "test": "@test:unit",
         "test:unit": "pest",
+        "mutate": "@php -d pcov.directory=. vendor/bin/pest tests/Unit/ConfigTest.php tests/Unit/CustomizeTest.php tests/Unit/FunctionsTest.php tests/Unit/GutenbergTest.php tests/Unit/HelperFunctionsTest.php tests/Unit/OutputTest.php tests/Unit/PageTemplatesTest.php tests/Unit/ThemeLoadTest.php tests/Unit/WooCommerceNoticeTest.php tests/Unit/WooCommerceOutputTest.php tests/Unit/WooCommerceSetupTest.php --mutate --path=functions.php,lib,config,page-templates",
         "pint": "pint",
         "refactor": "rector",
         "refactor:sweep": "rector --clear-cache --config=rector-sweep.php",
