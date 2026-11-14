@@ -94,7 +94,7 @@ function brief_stub_genesis(array $theme_mods = []): void
  * the tests. What the load registered is snapshotted here, because tearDown()
  * discards it: `brief_registered_hooks()` and `brief_recorded_calls()` read the
  * snapshot back. `lib/gutenberg/init.php` loads the way WordPress loads it, by
- * running the `after_setup_theme` callback that requires it.
+ * running the `after_setup_theme` callback that requires it, and the two page templates load after it.
  */
 function brief_load_theme(): void
 {
@@ -120,7 +120,20 @@ function brief_load_theme(): void
     add_action('genesis_entry_header', 'genesis_post_info', 12);
     add_action('genesis_entry_footer', 'genesis_post_meta');
 
-    foreach (['add_theme_support', 'add_editor_style', 'add_image_size', 'unregister_sidebar', 'genesis_unregister_layout', 'genesis_register_responsive_menus'] as $recorded) {
+    // The same for what the page templates remove.
+    add_action('genesis_entry_header', 'genesis_entry_header_markup_open', 5);
+    add_action('genesis_entry_header', 'genesis_entry_header_markup_close', 15);
+    add_action('genesis_entry_header', 'genesis_do_post_title');
+    add_action('genesis_before_loop', 'genesis_do_breadcrumbs');
+    add_action('genesis_before_header', 'genesis_skip_links', 5);
+    add_action('genesis_header', 'genesis_header_markup_open', 5);
+    add_action('genesis_header', 'genesis_do_header');
+    add_action('genesis_header', 'genesis_header_markup_close', 15);
+    add_action('genesis_footer', 'genesis_footer_markup_open', 5);
+    add_action('genesis_footer', 'genesis_do_footer');
+    add_action('genesis_footer', 'genesis_footer_markup_close', 15);
+
+    foreach (['add_theme_support', 'add_editor_style', 'add_image_size', 'unregister_sidebar', 'genesis_unregister_layout', 'genesis_register_responsive_menus', 'remove_theme_support', 'genesis'] as $recorded) {
         when($recorded)->alias(function (...$arguments) use ($recorded): void {
             $GLOBALS['brief_recorded_calls'][$recorded][] = $arguments;
         });
@@ -136,6 +149,10 @@ function brief_load_theme(): void
     require_once $root.'/functions.php';
 
     genesis_child_gutenberg_support();
+
+    // The page templates run at file scope when WordPress renders a page that uses one.
+    require_once $root.'/page-templates/blocks.php';
+    require_once $root.'/page-templates/landing.php';
 
     $GLOBALS['brief_registered_hooks'] = [];
 

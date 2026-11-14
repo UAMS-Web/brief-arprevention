@@ -17,6 +17,10 @@ declare(strict_types=1);
 
 return [
     'hooks' => [
+        'actions genesis_entry_header genesis_post_info 9 1',
+        'actions genesis_entry_header genesis_post_meta 14 1',
+        'actions genesis_header genesis_do_nav 12 1',
+        'actions genesis_footer genesis_do_subnav 5 1',
         'actions after_setup_theme brief_localization_setup 10 1',
         'actions after_setup_theme genesis_child_gutenberg_support 10 1',
         'actions after_setup_theme brief_theme_support 9 1',
@@ -28,6 +32,7 @@ return [
         'actions wp_enqueue_scripts brief_enqueue_scripts_styles 10 1',
         'actions wp_enqueue_scripts brief_enqueue_gutenberg_frontend_styles 10 1',
         'actions wp_enqueue_scripts brief_custom_gutenberg_css 10 1',
+        'actions wp_enqueue_scripts brief_dequeue_skip_links 10 1',
         'actions after_switch_theme brief_woocommerce_image_dimensions_after_theme_setup 1 1',
         'actions activated_plugin brief_woocommerce_image_dimensions_after_woo_activation 10 2',
         'actions admin_print_styles brief_remove_woocommerce_notice 10 1',
@@ -36,10 +41,6 @@ return [
         'actions admin_enqueue_scripts brief_notice_script 10 1',
         'actions switch_theme brief_reset_woocommerce_notice 10 2',
         'actions deactivated_plugin brief_reset_woocommerce_notice_on_deactivation 10 2',
-        'actions genesis_header genesis_do_nav 12 1',
-        'actions genesis_footer genesis_do_subnav 5 1',
-        'actions genesis_entry_header genesis_post_info 9 1',
-        'actions genesis_entry_header genesis_post_meta 14 1',
         'actions admin_menu hide_menu 10 1',
         'actions enqueue_block_editor_assets brief_block_editor_styles 10 1',
         'actions enqueue_block_editor_assets brief_custom_gutenberg_admin_css 10 1',
@@ -58,6 +59,8 @@ return [
         'filters gform_submit_button_1 __return_false 10 1',
         'filters gform_submit_button_2 __return_false 10 1',
         'filters body_class brief_blocks_body_classes 10 1',
+        'filters body_class brief_landing_body_class 10 1',
+        'filters genesis_site_layout __genesis_return_full_width_content 10 1',
     ],
     'calls' => [
         'add_theme_support' => [
@@ -138,6 +141,13 @@ return [
         ],
         'add_editor_style' => [
             ['/lib/gutenberg/style-editor.css'],
+        ],
+        'genesis' => [
+            [],
+            [],
+        ],
+        'remove_theme_support' => [
+            ['genesis-menus'],
         ],
     ],
 ];
