@@ -118,16 +118,20 @@ add_action('switch_theme', 'brief_reset_woocommerce_notice', 10, 2);
 function brief_reset_woocommerce_notice(): void
 {
 
+    /** @var wpdb $wpdb */
     global $wpdb;
 
     $args = [
         'meta_key' => $wpdb->prefix.'brief_woocommerce_message_dismissed',
         'meta_value' => '1',
+        'fields' => 'ID',
     ];
     $users = get_users($args);
 
-    foreach ($users as $user) {
-        delete_user_option($user->ID, 'brief_woocommerce_message_dismissed');
+    foreach ($users as $user_id) {
+        if (is_numeric($user_id)) {
+            delete_user_option((int) $user_id, 'brief_woocommerce_message_dismissed');
+        }
     }
 
 }

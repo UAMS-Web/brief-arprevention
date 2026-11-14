@@ -28,7 +28,7 @@ use function Brain\Monkey\Functions\when;
 function brief_run_css(array $mods = [], array|false $logo = false): ?string
 {
     brief_stub_genesis($mods);
-    when('absint')->alias(fn ($value): int => abs((int) $value));
+    when('absint')->alias('brief_absint');
     when('wp_get_attachment_image_src')->justReturn($logo);
 
     $css = null;
@@ -77,7 +77,7 @@ it('adds both color blocks, text first, when both colors are custom', function (
 describe('the logo', function (): void {
     it('looks the logo up by its attachment id, and by 0 when none is set', function (array $mods, int $id): void {
         brief_stub_genesis($mods);
-        when('absint')->alias(fn ($value): int => abs((int) $value));
+        when('absint')->alias('brief_absint');
         Functions\expect('wp_get_attachment_image_src')->once()->with($id, 'full')->andReturn(false);
 
         brief_css();

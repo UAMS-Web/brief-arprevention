@@ -45,3 +45,42 @@ function __genesis_return_full_width_content(): string
 {
     return 'full-width-content';
 }
+
+/**
+ * The theme handle, for PHPStan only.
+ */
+function genesis_get_theme_handle(): string
+{
+    return '';
+}
+
+/**
+ * The theme version, for PHPStan only.
+ */
+function genesis_get_theme_version(): string
+{
+    return '';
+}
+
+/**
+ * The config file Genesis loads from `config/`, typed by name, for PHPStan only.
+ *
+ * Genesis returns `mixed`. The theme's own files under `config/` return arrays, and
+ * `appearance` has a fixed shape every caller reads, so it is spelled out here.
+ *
+ * @param  string  $name  The config file name, without `.php`.
+ * @return ($name is 'appearance' ? array{
+ *     'fonts-url': string,
+ *     'content-width': int,
+ *     'text-color': string,
+ *     'link-color': string,
+ *     'button-color': string,
+ *     'default-colors': array{text: string, link: string},
+ *     'editor-color-palette': list<array{name: string, slug: string, color: string}>,
+ *     'editor-font-sizes': list<array{name: string, size: float|int, slug: string}>
+ * } : ($name is 'post-type-supports' ? array<string, array<string>|string> : array<string, mixed>))
+ */
+function genesis_get_config(string $name): array
+{
+    return [];
+}

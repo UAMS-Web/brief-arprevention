@@ -14,12 +14,12 @@ $brief_default_colors = [
     'link' => '#fff385',
 ];
 
-$brief_text_color = get_theme_mod(
+$brief_text_color = brief_theme_mod_string(
     'brief_text_color',
     $brief_default_colors['text']
 );
 
-$brief_link_color = get_theme_mod(
+$brief_link_color = brief_theme_mod_string(
     'brief_link_color',
     $brief_default_colors['link']
 );
