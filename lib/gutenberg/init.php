@@ -63,6 +63,11 @@ add_filter('body_class', 'brief_blocks_body_classes');
 function brief_blocks_body_classes($classes)
 {
 
+    // Equivalent under test: whether `has_blocks()` and `parse_blocks()` exist is a
+    // property of the process, and once any test's stub defines them
+    // no test can undefine them, so the `function_exists()` operands
+    // cannot be varied independently of test order.
+    // @pest-mutate-ignore: BooleanOrToBooleanAnd
     if (! is_singular() || ! function_exists('has_blocks') || ! function_exists('parse_blocks')) {
         return $classes;
     }
@@ -74,6 +79,9 @@ function brief_blocks_body_classes($classes)
     }
 
     $post_object = get_post(get_the_ID());
+    // Equivalent: `parse_blocks()` always returns an array, so the cast changes nothing,
+    // and `isset()` on the null a missing cast would leave is false just as it is on `[]`.
+    // @pest-mutate-ignore: RemoveArrayCast
     $blocks = (array) parse_blocks($post_object->post_content);
 
     if (isset($blocks[0]['blockName'])) {
