@@ -40,8 +40,6 @@ add_action('wp_enqueue_scripts', 'brief_woocommerce_css');
  * Adds the themes's custom CSS to the WooCommerce stylesheet.
  *
  * @since 2.3.0
- *
- * @return string CSS to be outputted after the theme's custom WooCommerce stylesheet.
  */
 function brief_woocommerce_css(): void
 {

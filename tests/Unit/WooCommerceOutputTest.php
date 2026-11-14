@@ -91,8 +91,8 @@ it('recolors the WooCommerce text and buttons from a custom text color', functio
 
     expect($result['css'])->toContain('color: #112233;')
         ->toContain('background-color: #112233;')
-        ->toContain('.woocommerce-message::before')
-        ->not->toContain('border-top-color');
+        ->toContain('.woocommerce-message::before');
+    expect($result['css'])->not->toContain('border-top-color');
 });
 
 it('raises no warning', function (): void {

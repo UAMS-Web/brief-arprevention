@@ -56,16 +56,16 @@ it('recolors text, links and buttons from a custom text color only', function ()
     expect($css)->toContain('color: #112233;')
         ->toContain('background-color: #112233;')
         ->toContain('color: #112233 !important;')
-        ->toContain('.nav-primary .genesis-nav-menu > .menu-highlight > a')
-        ->not->toContain('box-shadow');
+        ->toContain('.nav-primary .genesis-nav-menu > .menu-highlight > a');
+    expect($css)->not->toContain('box-shadow');
 });
 
 it('recolors the link highlight from a custom link color only', function (): void {
     $css = brief_run_css(['brief_link_color' => '#445566']);
 
     expect($css)->toContain('box-shadow: inset 0 -7px 0 0 #445566;')
-        ->toContain('box-shadow: inset 0 -6px 0 0 #445566;')
-        ->not->toContain('background-color');
+        ->toContain('box-shadow: inset 0 -6px 0 0 #445566;');
+    expect($css)->not->toContain('background-color');
 });
 
 it('adds both color blocks, text first, when both colors are custom', function (): void {
@@ -86,9 +86,9 @@ describe('the logo', function (): void {
         // 700x100 shrunk to 350 is 50px tall: (60 - 50) / 2 = 5, plus the 5px offset.
         $css = brief_run_css(logo: ['u', 700, 100]);
 
-        expect($css)->toContain('padding-top: 10px;')
-            ->not->toContain('position: static;')
-            ->not->toContain('max-width');
+        expect($css)->toContain('padding-top: 10px;');
+        expect($css)->not->toContain('position: static;');
+        expect($css)->not->toContain('max-width');
     });
 
     it('does not pad a logo that fills the header', function (): void {
@@ -123,8 +123,8 @@ describe('the logo', function (): void {
     it('limits the title area to a custom maximum width', function (): void {
         $css = brief_run_css(['brief_logo_width' => 400], ['u', 400, 400]);
 
-        expect($css)->toContain('max-width: 400px;')
-            ->not->toContain('float: none;');
+        expect($css)->toContain('max-width: 400px;');
+        expect($css)->not->toContain('float: none;');
     });
 
     it('lets the header scroll for a logo 200px tall or more', function (int $height, bool $static): void {
