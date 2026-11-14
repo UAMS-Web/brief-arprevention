@@ -7,10 +7,8 @@
  * effective height is `min(width, max width) / max(width / height, 1)`, and the
  * title area is padded to center it in a 60px header.
  *
- * Not pinned: a logo setting that names a missing attachment while
- * `has_custom_logo()` is true reads `$logo_effective_height` unset, a state
- * WordPress does not produce (`has_custom_logo()` is true only for an existing
- * attachment).
+ * The logo rules are built only when the attachment lookup returns a logo, so no logo
+ * value is ever read unset.
  *
  * @see lib/output.php
  */
@@ -32,7 +30,6 @@ function brief_run_css(array $mods = [], array|false $logo = false): ?string
     brief_stub_genesis($mods);
     when('absint')->alias(fn ($value): int => abs((int) $value));
     when('wp_get_attachment_image_src')->justReturn($logo);
-    when('has_custom_logo')->justReturn($logo !== false);
 
     $css = null;
     Functions\expect('wp_add_inline_style')->zeroOrMoreTimes()->andReturnUsing(function (string $handle, string $added) use (&$css): void {
@@ -78,6 +75,13 @@ it('adds both color blocks, text first, when both colors are custom', function (
 });
 
 describe('the logo', function (): void {
+    it('adds the logo rules after the color rules instead of replacing them', function (): void {
+        $css = (string) brief_run_css(['brief_text_color' => '#112233', 'brief_logo_width' => 400], ['u', 400, 200]);
+
+        expect($css)->toContain('color: #112233;')
+            ->toContain('position: static;');
+    });
+
     it('pads the title area to center a logo shorter than the header', function (): void {
         // 700x100 shrunk to 350 is 50px tall: (60 - 50) / 2 = 5, plus the 5px offset.
         $css = brief_run_css(logo: ['u', 700, 100]);
