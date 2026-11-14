@@ -12,6 +12,10 @@
 
 declare(strict_types=1);
 
+use Brain\Monkey\Functions;
+
+use function Brain\Monkey\Functions\when;
+
 it('picks dark grey for a light color and white for a dark one', function (string $color, string $expected): void {
     expect(brief_color_contrast($color))->toBe($expected);
 })->with([
@@ -39,6 +43,50 @@ it('weights each channel by its own luminosity coefficient', function (string $c
     'grey 129 is light' => ['#818181', '#333333'],
     'grey 128 is dark' => ['#808080', '#ffffff'],
 ]);
+
+describe('the theme mod readers', function (): void {
+    it('reads a text theme mod by name, with its default', function (): void {
+        Functions\expect('get_theme_mod')->once()->with('brief_text_color', '#333')->andReturn('#112233');
+
+        expect(brief_theme_mod_string('brief_text_color', '#333'))->toBe('#112233');
+    });
+
+    it('falls back to the default for a text theme mod that is not text', function (mixed $stored): void {
+        when('get_theme_mod')->justReturn($stored);
+
+        expect(brief_theme_mod_string('brief_text_color', '#333'))->toBe('#333');
+    })->with([
+        'false' => [false],
+        'null' => [null],
+        'a number' => [7],
+        'an array' => [['#111']],
+    ]);
+
+    it('reads a whole-number theme mod by name, with its default', function (): void {
+        when('absint')->alias(fn ($value): int => abs((int) $value));
+        Functions\expect('get_theme_mod')->once()->with('brief_logo_width', 350)->andReturn('400');
+
+        expect(brief_theme_mod_int('brief_logo_width', 350))->toBe(400);
+    });
+
+    it('makes a whole-number theme mod non-negative', function (): void {
+        when('absint')->alias(fn ($value): int => abs((int) $value));
+        when('get_theme_mod')->justReturn(-120);
+
+        expect(brief_theme_mod_int('brief_logo_width', 350))->toBe(120);
+    });
+
+    it('falls back to the default for a whole-number theme mod that is not numeric', function (mixed $stored): void {
+        when('absint')->alias(fn ($value): int => abs((int) $value));
+        when('get_theme_mod')->justReturn($stored);
+
+        expect(brief_theme_mod_int('brief_logo_width', 350))->toBe(350);
+    })->with([
+        'false' => [false],
+        'text' => ['wide'],
+        'an array' => [[400]],
+    ]);
+});
 
 it('lightens a color and stops each channel at 255', function (): void {
     expect(brief_color_brightness('#102030', 16))->toBe('#203040')

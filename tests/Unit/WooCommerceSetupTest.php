@@ -33,7 +33,7 @@ function brief_capture_options(): array
 it('turns on the product gallery features at load when WooCommerce is active', function (): void {
     $features = array_column(array_filter(
         brief_recorded_calls('add_theme_support'),
-        fn (array $call): bool => str_starts_with($call[0], 'wc-')
+        fn (array $call): bool => is_string($call[0]) && str_starts_with($call[0], 'wc-')
     ), 0);
 
     expect($features)->toBe(['wc-product-gallery-lightbox', 'wc-product-gallery-slider', 'wc-product-gallery-zoom']);

@@ -104,11 +104,16 @@ function brief_inline_font_sizes(): string
     $css = '';
     $editor_font_sizes = get_theme_support('editor-font-sizes');
 
-    if (! $editor_font_sizes) {
+    if (! is_array($editor_font_sizes) || ! is_array($editor_font_sizes[0] ?? null)) {
         return '';
     }
 
     foreach ($editor_font_sizes[0] as $font_size) {
+        // A size without a text slug or a plain size has nothing to name or measure.
+        if (! is_array($font_size) || ! is_string($font_size['slug'] ?? null) || ! is_scalar($font_size['size'] ?? null)) {
+            continue;
+        }
+
         $css .= <<<CSS
 		.site-container .has-{$font_size['slug']}-font-size {
 			font-size: {$font_size['size']}px;

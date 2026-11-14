@@ -22,8 +22,9 @@ use Brain\Monkey\Functions;
  * Loads a config file with the given theme mods.
  *
  * @param  array<string, mixed>  $mods
+ * @return array<string, mixed>
  */
-function brief_config(string $name, array $mods = []): mixed
+function brief_config(string $name, array $mods = []): array
 {
     brief_stub_genesis($mods);
 
@@ -166,7 +167,7 @@ describe('appearance', function (): void {
             ->and($appearance['button-color'])->toBe('#111111')
             ->and($appearance['link-color'])->toBe('#222222')
             ->and($appearance['default-colors'])->toBe(['text' => '#333', 'link' => '#fff385'])
-            ->and(array_column($appearance['editor-color-palette'], 'color'))->toBe(['#111111', '#222222']);
+            ->and(array_column((array) $appearance['editor-color-palette'], 'color'))->toBe(['#111111', '#222222']);
     });
 
     it('asks for each theme mod by name with its default', function (): void {
