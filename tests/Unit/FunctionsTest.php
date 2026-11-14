@@ -179,4 +179,23 @@ describe('hide_menu', function (): void {
         'without the capability' => [false],
         'with the capability' => [true],
     ]);
+
+    it('still hides the menu pages when the editor role cannot be found', function (): void {
+        when('wp_get_current_user')->justReturn((object) ['roles' => ['editor']]);
+        when('current_user_can')->justReturn(false);
+        Functions\expect('get_role')->once()->with('editor')->andReturn(null);
+
+        $removed = [];
+        when('remove_submenu_page')->alias(function (string $menu, string $submenu) use (&$removed): void {
+            $removed[] = [$menu, $submenu];
+        });
+
+        global $submenu;
+        $submenu = ['themes.php' => [6 => 'Customize']];
+
+        hide_menu();
+
+        expect($removed)->toHaveCount(3)
+            ->and($submenu['themes.php'])->toBe([]);
+    });
 });

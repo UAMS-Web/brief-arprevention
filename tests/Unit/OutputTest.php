@@ -71,7 +71,7 @@ it('recolors the link highlight from a custom link color only', function (): voi
 it('adds both color blocks, text first, when both colors are custom', function (): void {
     $css = brief_run_css(['brief_text_color' => '#112233', 'brief_link_color' => '#445566']);
 
-    expect(strstr($css, '#445566', true))->toContain('#112233');
+    expect(strstr((string) $css, '#445566', true))->toContain('#112233');
 });
 
 describe('the logo', function (): void {

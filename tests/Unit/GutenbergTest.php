@@ -107,6 +107,15 @@ describe('brief_blocks_body_classes', function (): void {
         'no blocks parsed' => [[], []],
     ]);
 
+    it('adds nothing when there is no current post', function (): void {
+        when('is_singular')->justReturn(true);
+        when('has_blocks')->justReturn(true);
+        Functions\expect('get_post')->once()->andReturn(null);
+        Functions\expect('parse_blocks')->never();
+
+        expect(brief_blocks_body_classes(['a']))->toBe(['a']);
+    });
+
     it('adds nothing when the post parses to no blocks at all', function (): void {
         when('is_singular')->justReturn(true);
         when('has_blocks')->justReturn(true);
