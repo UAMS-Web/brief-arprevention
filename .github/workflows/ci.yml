@@ -50,7 +50,7 @@ jobs:
   # The shared chain. Its checks report as `checks / <job name> (<operating system>)`.
   checks:
     if: vars.RUN_REMOTE_CI != 'false'
-    uses: UAMS-Web/uams-ci-workflows/.github/workflows/ci.yml@v0.10.1
+    uses: UAMS-Web/uams-ci-workflows/.github/workflows/ci.yml@v0.13.0
     with:
       linux-only: true
       mutate-paths: functions.php lib config page-templates
