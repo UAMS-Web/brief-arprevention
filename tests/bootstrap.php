@@ -3,9 +3,10 @@
 /**
  * Unit bootstrap for the theme.
  *
- * Loads functions.php, which a theme cannot avoid, inside one Brain Monkey
- * session. The functions it defines outlive the session; the hooks it
- * registered are discarded by tearDown(), so every test starts clean.
+ * Prepares what functions.php needs and leaves loading it to the first test
+ * (`brief_load_theme()` in tests/Pest.php). Loading it here would run every
+ * file-scope statement before the coverage driver starts, so no mutation of one
+ * could ever be attributed to a test.
  *
  * functions.php starts the Genesis parent theme by requiring
  * `lib/init.php` from the template directory. The parent is not part of this
@@ -14,10 +15,6 @@
  */
 
 declare(strict_types=1);
-
-use function Brain\Monkey\Functions\when;
-use function Brain\Monkey\setUp;
-use function Brain\Monkey\tearDown;
 
 require_once __DIR__.'/../vendor/autoload.php';
 
@@ -37,18 +34,6 @@ if (file_put_contents($genesis_stub.'/lib/init.php', "<?php\n") === false) {
     throw new RuntimeException('Could not write the Genesis stand-in '.$genesis_stub.'/lib/init.php');
 }
 
-setUp();
-
-when('get_template_directory')->justReturn($genesis_stub);
-when('get_stylesheet_directory')->justReturn(dirname(__DIR__));
-
-// What functions.php calls at file scope that Brain Monkey does not define.
-when('add_image_size')->justReturn();
-when('unregister_sidebar')->justReturn();
-when('genesis_unregister_layout')->justReturn();
-
-require_once __DIR__.'/../functions.php';
-
-tearDown();
+$GLOBALS['brief_genesis_stand_in'] = $genesis_stub;
 
 // cspell:ignore ABSPATH

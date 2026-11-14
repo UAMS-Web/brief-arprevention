@@ -38,6 +38,8 @@ function brief_css(): void
 
     $css = '';
 
+    // Equivalent: `$css` is the empty string here, so `.=` and `=` give the same value.
+    // @pest-mutate-ignore: ConcatEqualToEqual
     $css .= ($appearance['default-colors']['text'] !== $color_text) ? sprintf(
         '
 
