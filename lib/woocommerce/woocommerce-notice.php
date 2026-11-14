@@ -122,7 +122,7 @@ function brief_reset_woocommerce_notice(): void
 
     $args = [
         'meta_key' => $wpdb->prefix.'brief_woocommerce_message_dismissed',
-        'meta_value' => 1,
+        'meta_value' => '1',
     ];
     $users = get_users($args);
 
