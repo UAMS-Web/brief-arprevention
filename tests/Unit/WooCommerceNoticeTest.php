@@ -146,7 +146,7 @@ it('enqueues the dismissal script in the footer', function (): void {
 
 it('forgets the dismissal of every user who had dismissed it', function (): void {
     $GLOBALS['wpdb'] = (object) ['prefix' => 'wp_'];
-    Functions\expect('get_users')->once()->with(['meta_key' => 'wp_brief_woocommerce_message_dismissed', 'meta_value' => 1])->andReturn([(object) ['ID' => 3], (object) ['ID' => 9]]);
+    Functions\expect('get_users')->once()->with(['meta_key' => 'wp_brief_woocommerce_message_dismissed', 'meta_value' => '1'])->andReturn([(object) ['ID' => 3], (object) ['ID' => 9]]);
     $deleted = [];
     when('delete_user_option')->alias(function (int $id, string $option) use (&$deleted): void {
         $deleted[] = [$id, $option];

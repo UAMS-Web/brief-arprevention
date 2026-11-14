@@ -53,6 +53,8 @@ describe('brief_customizer_register', function (): void {
             $controls[] = $arguments;
         });
 
+        // A Mockery stand-in for WP_Customize_Manager, which only WordPress provides; the Mockery PHPStan extension is not installed.
+        // @phpstan-ignore argument.type
         brief_customizer_register($manager);
 
         expect($settings)->toBe([

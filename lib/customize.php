@@ -36,6 +36,8 @@ function brief_customizer_register($wp_customize): void
         new WP_Customize_Color_Control(
             $wp_customize,
             'brief_text_color',
+            // A control's `settings` may be a setting id; the WordPress stubs type it as an array only.
+            // @phpstan-ignore argument.type
             [
                 'description' => __('Change the default color for body, heading, button background, and other text.', 'brief'),
                 'label' => __('Text Color', 'brief'),
@@ -57,6 +59,8 @@ function brief_customizer_register($wp_customize): void
         new WP_Customize_Color_Control(
             $wp_customize,
             'brief_link_color',
+            // A control's `settings` may be a setting id; the WordPress stubs type it as an array only.
+            // @phpstan-ignore argument.type
             [
                 'description' => __('Change the default link highlight color.', 'brief'),
                 'label' => __('Link Color', 'brief'),
@@ -68,6 +72,8 @@ function brief_customizer_register($wp_customize): void
 
     $wp_customize->add_setting(
         'brief_logo_width',
+        // A setting's `default` may be any value; the WordPress stubs type it as a string only.
+        // @phpstan-ignore argument.type
         [
             'default' => 350,
             'sanitize_callback' => 'absint',
@@ -78,6 +84,8 @@ function brief_customizer_register($wp_customize): void
     // Add a control for the logo size.
     $wp_customize->add_control(
         'brief_logo_width',
+        // A control's `settings` may be a setting id; the WordPress stubs type it as an array only.
+        // @phpstan-ignore argument.type
         [
             'label' => __('Logo Width', 'brief'),
             'description' => __('The maximum width of the logo in pixels.', 'brief'),
