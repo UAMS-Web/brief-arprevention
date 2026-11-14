@@ -170,26 +170,28 @@ function brief_css(): void
         $color_link
     ) : '';
 
-    $css .= (has_custom_logo() && ($logo_effective_height >= 200)) ?
-        '
+    // The logo values are set only when a logo exists, so its rules are built only then.
+    if ($logo) {
+        $css .= ($logo_effective_height >= 200) ?
+            '
 		.site-header {
 			position: static;
 		}
 		'
-    : '';
+        : '';
 
-    $css .= (has_custom_logo() && ($logo_max_width !== 350)) ? sprintf(
-        '
+        $css .= ($logo_max_width !== 350) ? sprintf(
+            '
 		.wp-custom-logo .site-container .title-area {
 			max-width: %spx;
 		}
 		',
-        $logo_max_width
-    ) : '';
+            $logo_max_width
+        ) : '';
 
-    // Place menu below logo and center logo once it gets big.
-    $css .= (has_custom_logo() && ($logo_max_width >= 600)) ?
-        '
+        // Place menu below logo and center logo once it gets big.
+        $css .= ($logo_max_width >= 600) ?
+            '
 		.wp-custom-logo .title-area,
 		.wp-custom-logo .menu-toggle,
 		.wp-custom-logo .nav-primary {
@@ -211,16 +213,17 @@ function brief_css(): void
 			}
 		}
 		'
-    : '';
+        : '';
 
-    $css .= (has_custom_logo() && $logo_padding && ($logo_effective_height > 1)) ? sprintf(
-        '
+        $css .= ($logo_padding && ($logo_effective_height > 1)) ? sprintf(
+            '
 		.wp-custom-logo .title-area {
 			padding-top: %spx;
 		}
 		',
-        $logo_padding + 5
-    ) : '';
+            $logo_padding + 5
+        ) : '';
+    }
 
     if ($css) {
         wp_add_inline_style(genesis_get_theme_handle(), $css);
