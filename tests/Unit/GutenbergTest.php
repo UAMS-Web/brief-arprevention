@@ -96,8 +96,7 @@ describe('brief_blocks_body_classes', function (): void {
     it('names the first block and its alignment', function (array $block, array $expected): void {
         when('is_singular')->justReturn(true);
         when('has_blocks')->justReturn(true);
-        when('get_the_ID')->justReturn(7);
-        Functions\expect('get_post')->once()->with(7)->andReturn((object) ['post_content' => '<!-- wp:x -->']);
+        Functions\expect('get_post')->once()->withNoArgs()->andReturn((object) ['post_content' => '<!-- wp:x -->']);
         Functions\expect('parse_blocks')->once()->with('<!-- wp:x -->')->andReturn([$block]);
 
         expect(brief_blocks_body_classes(['a']))->toBe(['a', ...$expected]);
@@ -111,7 +110,6 @@ describe('brief_blocks_body_classes', function (): void {
     it('adds nothing when the post parses to no blocks at all', function (): void {
         when('is_singular')->justReturn(true);
         when('has_blocks')->justReturn(true);
-        when('get_the_ID')->justReturn(7);
         when('get_post')->justReturn((object) ['post_content' => '']);
         when('parse_blocks')->justReturn([]);
 
@@ -192,8 +190,8 @@ describe('inline styles', function (): void {
 
         brief_custom_gutenberg_css();
 
-        expect(strpos($css, '.wp-block-image figcaption a'))->toBeLessThan(strpos($css, '.has-tiny-font-size'))
-            ->and(strpos($css, '.has-tiny-font-size'))->toBeLessThan(strpos($css, '.has-theme-primary-color'));
+        expect(strstr($css, '.has-tiny-font-size', true))->toContain('.wp-block-image figcaption a')
+            ->and(strstr($css, '.has-theme-primary-color', true))->toContain('.has-tiny-font-size');
     });
 
     it('adds the editor CSS after the editor fonts', function (): void {

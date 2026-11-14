@@ -47,7 +47,7 @@ uses()
  * The priority a callback was registered at while functions.php loaded, or null
  * when it was not registered, or registered more than once.
  *
- * @param  'actions'|'filters'  $type
+ * @param  string  $type  `actions` or `filters`.
  */
 function brief_registered_hooks(string $type, string $hook, string $callback): ?int
 {

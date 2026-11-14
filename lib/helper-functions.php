@@ -57,6 +57,6 @@ function brief_color_brightness($color, $change): string
     $green = max(0, min(255, $green + $change));
     $blue = max(0, min(255, $blue + $change));
 
-    return '#'.dechex($red).dechex($green).dechex($blue);
+    return '#'.sprintf('%x%x%x', $red, $green, $blue);
 
 }

@@ -102,6 +102,8 @@ describe('brief_validate_logo_width', function (): void {
         $validity = Mockery::mock();
         $validity->shouldReceive('add')->never();
 
+        // A Mockery stand-in for WP_Error, which only WordPress provides; the Mockery PHPStan extension is not installed.
+        // @phpstan-ignore argument.type
         expect(brief_validate_logo_width($validity, $width))->toBe($validity);
     })->with([
         'the minimum' => [100],
@@ -113,6 +115,8 @@ describe('brief_validate_logo_width', function (): void {
         $validity = Mockery::mock();
         $validity->shouldReceive('add')->once()->with('required', 'You must supply a valid number.');
 
+        // A Mockery stand-in for WP_Error, which only WordPress provides; the Mockery PHPStan extension is not installed.
+        // @phpstan-ignore argument.type
         expect(brief_validate_logo_width($validity, $width))->toBe($validity);
     })->with([
         'empty string' => [''],
@@ -125,6 +129,8 @@ describe('brief_validate_logo_width', function (): void {
         $validity = Mockery::mock();
         $validity->shouldReceive('add')->once()->with('logo_too_small', 'The logo width cannot be less than 100.');
 
+        // A Mockery stand-in for WP_Error, which only WordPress provides; the Mockery PHPStan extension is not installed.
+        // @phpstan-ignore argument.type
         expect(brief_validate_logo_width($validity, 99))->toBe($validity);
     });
 });

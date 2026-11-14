@@ -105,9 +105,9 @@ function brief_customizer_register($wp_customize): void
 /**
  * Displays a message if the entered width is not numeric or greater than 100.
  *
- * @param  object  $validity  The validity status.
+ * @param  WP_Error  $validity  The validity status.
  * @param  mixed  $width  The width entered by the user.
- * @return object The validity status, with an error added when the width is not valid.
+ * @return WP_Error The validity status, with an error added when the width is not valid.
  */
 function brief_validate_logo_width($validity, $width)
 {
