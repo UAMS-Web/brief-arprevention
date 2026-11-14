@@ -31,8 +31,8 @@ includes:
     # this repository does not carry, and a few legacy findings. See the adoption
     # ticket. Drain it by fixing, never by growing it.
     - phpstan-baseline.neon
-    # Optional, when the repository uses Mockery:
-    # - vendor/phpstan/phpstan-mockery/extension.neon
+    # The tests use Mockery: the extension types its mocks.
+    - vendor/phpstan/phpstan-mockery/extension.neon
     # When the tests run on Pest: Pest's own extension, shipped inside
     # pestphp/pest. It registers Pest's expectation classes as universal object
     # crates, so chained expectations analyze instead of reporting undefined
