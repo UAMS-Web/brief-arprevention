@@ -10,7 +10,7 @@ The theme provides two page templates, in [`page-templates/`](https://github.com
 | Page title (entry header) | shown | removed | shown |
 | Breadcrumbs | per Genesis settings | removed | per Genesis settings |
 | Layout | per page or site | full width, always | per page or site |
-| Site footer | shown | shown | removed |
+| Site footer | shown | shown | removed (the footer widget area still shows if it has widgets) |
 | Body class added | none | none | `landing-page` |
 
 ## Blocks

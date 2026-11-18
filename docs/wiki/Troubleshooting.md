@@ -39,6 +39,6 @@ Written against v1.0.1.
 
 ## A page shows no header, menu or footer
 
-**Cause:** the page uses the **Landing** template.
+**Cause:** the page uses the **Landing** template. Widgets in the footer widget area still show.
 
 **Fix:** choose the default template, or **Blocks** to keep the header and footer without the page title. See [Page templates](Page-templates.md).

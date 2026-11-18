@@ -31,7 +31,7 @@ Go to **Appearance**, **Customize**, **Site Identity** and upload a logo. Set **
 
 In the Customizer, open **Colors** and set **Text Color** and **Link Color**. The page preview shows the change before it is published. [Changing the colors and the logo](Changing-the-colors-and-the-logo.md) covers what each color reaches.
 
-**Note:** the theme lets users with the Editor role open **Appearance**, **Menus**, and hides the Themes, Widgets and Customize pages from them. An administrator does steps 4 and 5.
+**Note:** the theme lets users with the Editor role open **Appearance**, **Menus**, and other screens that need the same capability, such as Genesis Theme Settings, and hides the Themes, Widgets and Customize pages from them. An administrator does steps 4 and 5.
 
 ## Go further
 

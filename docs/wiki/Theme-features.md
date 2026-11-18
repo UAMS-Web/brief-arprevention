@@ -83,7 +83,7 @@ Genesis applies these when the theme is activated, from [`config/child-theme-set
 
 ## Editor access to menus
 
-Users with the Editor role are given the `edit_theme_options` capability, so they can open **Appearance**, **Menus**. The Themes, Widgets and Customize pages are then hidden from them. Hiding a page does not block it: an editor who goes to its address can still open it.
+Users with the Editor role are given the `edit_theme_options` capability the first time they open an admin page, so they can open **Appearance**, **Menus**. The capability also opens every other screen that requires it, such as **Genesis**, **Theme Settings**; only the Themes, Widgets and Customize pages are hidden from them. Hiding a page does not block it: an editor who goes to its address can still open it.
 
 **Note:** the capability is added to the Editor role itself and stays on the role if the theme is switched.
 
@@ -94,8 +94,8 @@ When the Simple Social Icons plugin is active, its defaults are: centered, 40-pi
 ## WooCommerce
 
 - With WooCommerce active and Genesis Connect for WooCommerce missing, users who can manage WooCommerce see a dismissible notice asking them to install it. A dismissed notice returns when the theme is switched, or when WooCommerce or Genesis Connect for WooCommerce is deactivated.
-- 8 products per page; the small-screen breakpoint is 860 pixels (1200 with a sidebar).
-- When the theme is activated with WooCommerce installed, and when WooCommerce is activated, the single product image is set to 655 pixels wide and catalog images to 500 pixels, cropped 1:1. These are WooCommerce settings and can be changed afterward.
+- 8 products per page with Genesis Connect for WooCommerce; the small-screen breakpoint is 860 pixels (1200 with a sidebar).
+- When the theme is activated from **Appearance**, **Themes** while WooCommerce is active, and when WooCommerce is activated, the single product image is set to 655 pixels wide and catalog images to 500 pixels, cropped 1:1. These are WooCommerce settings and can be changed afterward.
 - Gallery thumbnails are 180 by 180, cropped.
 - The *Description* heading on the product tab is removed.
 

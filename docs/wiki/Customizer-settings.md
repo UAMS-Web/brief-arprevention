@@ -8,11 +8,11 @@ The theme adds three settings to the Customizer (**Appearance**, **Customize**).
 | --- | --- | --- | --- | --- | --- |
 | Text Color | Colors | `brief_text_color` | color | `#333` | a hex color (`sanitize_hex_color`) |
 | Link Color | Colors | `brief_link_color` | color | `#fff385` | a hex color (`sanitize_hex_color`) |
-| Logo Width | Site Identity | `brief_logo_width` | number, pixels | `350` | a whole number, `100` or more |
+| Logo Width | Site Identity | `brief_logo_width` | number, pixels | `350` | a number, `100` or more; a decimal is cut to a whole number |
 
 ## Text Color
 
-Body text, headings, links, menu links, the site title, form fields and the menu buttons, and the background of buttons (including WPForms and Ninja Forms submit buttons) and of a header menu item with the `menu-highlight` class. It is also the editor palette's **Text color** (`theme-primary`).
+Body text, headings, links, menu links, the site title, form fields and the menu buttons, and the background of buttons (including WPForms and Ninja Forms submit buttons) and, at 960 pixels and wider, of a header menu item with the `menu-highlight` class. It is also the editor palette's **Text color** (`theme-primary`).
 
 ## Link Color
 
@@ -20,7 +20,7 @@ The underline highlight on links in the content and widgets, the post meta, capt
 
 ## Logo Width
 
-The largest width the logo is shown at. Only takes effect when a logo is set under **Site Identity**. An empty value or one that is not a number is refused with *You must supply a valid number.*; a value under 100 with *The logo width cannot be less than 100.* See [Changing the colors and the logo](Changing-the-colors-and-the-logo.md#what-the-logo-width-changes) for the layout changes at larger widths.
+The largest width the logo is shown at. Only takes effect when a logo is set under **Site Identity**. An empty value, zero, or one that is not a number is refused with *You must supply a valid number.*; any other value under 100 with *The logo width cannot be less than 100.* See [Changing the colors and the logo](Changing-the-colors-and-the-logo.md#what-the-logo-width-changes) for the layout changes at larger widths.
 
 ## Example
 
