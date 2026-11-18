@@ -8,6 +8,10 @@
 3. Activate the Brief theme.
 4. Inside your WordPress dashboard, go to Genesis > Theme Settings and configure them to your liking.
 
+## Documentation
+
+Setup, settings, page templates, troubleshooting and development notes are in the wiki: https://github.com/UAMS-Web/brief-arprevention/wiki
+
 ## Theme Support
 
 Please visit https://minimalgenesis.com/help/ for theme support.
